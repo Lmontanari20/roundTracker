@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   resources :users
   
   get '/login/:username', to: 'users#login' 
- 
+  get '/login', to: 'users#error'
 end
