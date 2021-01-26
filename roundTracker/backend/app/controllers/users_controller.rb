@@ -10,23 +10,22 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.create(user_params)
+        user = User.create(username: params[:username])
         render json: user 
     end
 
     def login
         user = User.find_by(username: params[:username])
         if user 
-            session[:user_id] = user.id
-            render user
+            render json: user
         else
-            error = {message: "Not a valid username"} 
-            render error 
+            error = {message: "Not a valid username, to create one press signup instead of login."} 
+            render json: error 
         end
     end
   
-    def user_params
-        params.require(:user).permit[:username]
-    end
+    # def user_params
+    #     params.require(:username)
+    # end
 
 end

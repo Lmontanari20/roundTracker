@@ -2,7 +2,8 @@
 <head>
     <title>Round Tracker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-</head>
+    <script defer src="main.js"></script>
+  </head>
 
 <body>
     <nav class="navbar navbar-inverse">
@@ -15,15 +16,18 @@
             <li><a href="#">Previous Rounds</a></li>
             <li><a href="#">Analytics</a></li>
           </ul>
-          <form class="navbar-form navbar-left" action="/action_page.php">
+          <form class="navbar-form navbar-left" action="#">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" name="name" class="form-control" placeholder="Username">
             </div>
-            <button type="submit" class="btn btn-default">Login</button>
-            <button type="submit" class="btn btn-default">Signup</button>
+            <button type="submit" id="login" class="btn btn-default">Login</button>
+            <button type="submit" id="signup" class="btn btn-default">Signup</button>
           </form>
         </div>
       </nav>
+      <div id="main">
+        
+      </div>
 </body>
 
 <footer>
