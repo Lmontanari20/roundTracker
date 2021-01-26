@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   resources :rounds
   resources :users
   
-  get '/login', to: 'users#login' 
+  get '/login/:username', to: 'users#login' 
  
 end
