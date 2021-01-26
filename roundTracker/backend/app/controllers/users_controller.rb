@@ -23,9 +23,18 @@ class UsersController < ApplicationController
             render json: error 
         end
     end
+
+    def error
+        error = {message: "Not a valid username, to create one press signup instead of login."} 
+        render json: error 
+    end
+
+    def analytics 
+        
+    end
   
     # def user_params
-    #     params.require(:username)
+    #     params.require[:username).permit[name: ]
     # end
 
 end
