@@ -934,3 +934,337 @@ Processing by UsersController#login as */*
 Completed 200 OK in 29ms (Views: 7.3ms | ActiveRecord: 0.9ms | Allocations: 286234)
 
 
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:35:32 -0800
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 18ms (Views: 0.7ms | ActiveRecord: 0.7ms | Allocations: 8450)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:35:38 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 597)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:43:04 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:18:in `login'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 3ms (Views: 0.3ms | ActiveRecord: 0.6ms | Allocations: 1059)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:43:35 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 597)
+
+
+Started GET "/" for ::1 at 2021-01-26 09:46:11 -0800
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /Users/Lucas/.rvm/gems/ruby-2.6.1/gems/railties-6.1.1/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /Users/Lucas/.rvm/gems/ruby-2.6.1/gems/railties-6.1.1/lib/rails/templates/rails/welcome/index.html.erb (Duration: 6.3ms | Allocations: 315)
+Completed 200 OK in 19ms (Views: 9.8ms | ActiveRecord: 0.0ms | Allocations: 2444)
+
+
+Started GET "/favicon.ico" for ::1 at 2021-01-26 09:46:11 -0800
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/users" for ::1 at 2021-01-26 09:46:17 -0800
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:5:in `index'
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.2ms | Allocations: 1394)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:49:29 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 594)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:49:59 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 597)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:50:11 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:50:12 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:53:30 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:54:00 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:56:23 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:57:05 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.3ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 09:57:32 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 22ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 581)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:00:41 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/adfad" for 127.0.0.1 at 2021-01-26 10:00:54 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"adfad"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "adfad"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.2ms | ActiveRecord: 0.1ms | Allocations: 494)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:01:44 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:01:50 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:02:01 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:03:20 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:03:31 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:03:34 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:03:52 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:04:03 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:04:09 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:04:18 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:04:26 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:04:33 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:07:13 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-26 10:08:46 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:09:26 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/ralph" for 127.0.0.1 at 2021-01-26 10:11:51 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"ralph"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "ralph"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/ralph" for 127.0.0.1 at 2021-01-26 10:12:30 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"ralph"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "ralph"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.4ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:13:15 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:13:55 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.3ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:15:00 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:15:05 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.3ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:16:45 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:17:43 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-26 10:18:40 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:18:in `login'
+Completed 200 OK in 2ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 580)
+
+
