@@ -10,9 +10,16 @@ function addEventListeners() {
     let form = document.getElementsByClassName("navbar-form navbar-left")[0];
     let login = document.getElementById('login');
     let signup = document.getElementById('signup');
+    let welcome = document.getElementById('welcome');
+    let newRound = document.getElementById('new-round');
+    let rounds = document.getElementById('rounds');
 
     login.addEventListener("click", (e) => getUser(e, form));
     signup.addEventListener("click", () => postUser(form));
+    welcome.addEventListener("click", () => renderWelcome());
+    newRound.addEventListener("click", () => renderCreateRound(localStorage.user))
+    //rounds.addEventListener("click", () => )
+
 }
 
 // post the user on signup 
@@ -76,9 +83,10 @@ function renderWelcome() {
     clearMain();
 
     let header = document.createElement('h2');
-    let lilheader = document.createElement('h5');
+    let lilheader = document.createElement('h4');
     let img = document.createElement('img');
     let p = document.createElement('p');
+    let br = document.createElement('br');
 
     img.src = "https://blog-assets.lightspeedhq.com/img/2020/04/6f706b67-golf-scorecard.jpg";
     img.style.width = "600px";
@@ -98,8 +106,9 @@ function renderWelcome() {
 
 // renders the create round form 
 function renderCreateRound(user) {
-    if(!user){
+    if(typeof user === 'undefined'){
         renderWelcome();
+        return
     }
 
     clearMain();
@@ -116,11 +125,11 @@ function renderCreateRound(user) {
     header.textContent = "Create a New Golf Round";
 
     let form = document.createElement('form');
-    let nameLabel = document.createElement('h4');
+    let nameLabel = document.createElement('h5');
     let nameInput = document.createElement('input');
-    let courseLabel = document.createElement('h4');
+    let courseLabel = document.createElement('h5');
     let courseDropDown = document.createElement('select');
-    let lengthLabel = document.createElement('h4');
+    let lengthLabel = document.createElement('h5');
     let lengthDropDown = document.createElement('select');
     let createRound = document.createElement('button');
     let br = document.createElement('br');
@@ -158,12 +167,12 @@ function renderHole(holes, index) {
     clearMain()
 
     let header = document.createElement('h2')
-    let parLabel = document.createElement('h4')
-    let distLabel = document.createElement('h4')
+    let parLabel = document.createElement('h5')
+    let distLabel = document.createElement('h5')
     let next = document.createElement('button')
     let previous = document.createElement('button')
     let finish = document.createElement('button')
-    let scoreLabel = document.createElement('h4')
+    let scoreLabel = document.createElement('h5')
     let scoreInput = document.createElement('input')
     let br = document.createElement('br')
     
@@ -180,7 +189,6 @@ function renderHole(holes, index) {
     next.addEventListener('click', () => renderHole(holes, index + 1))
     previous.addEventListener('click', () => renderHole(holes, index - 1))
     finish.addEventListener('click', () => finishRound(holes))
-
     
     main.append(header, parLabel, distLabel, scoreLabel, scoreInput, br, previous, next, finish)
 }
