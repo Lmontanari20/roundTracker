@@ -18,13 +18,14 @@ class RoundsController < ApplicationController
     end
 
     def destroy
-        round = Round.find(params [:id])
-        round.destroy 
+        round = Round.find_by(id: params[:id])
+        round.destroy() 
     end
 
     def update
-        round = Round.find(params [:id])
-        round.update(name: params[:name], score: params[:score])
+        round = Round.find(params[:id])
+        #round.update(name: params[:name], score: params[:score])
+        round.update(name: params[:name])
         render json: round
     end
 

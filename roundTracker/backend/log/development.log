@@ -19663,3 +19663,1848 @@ Processing by RoundsController#index as HTML
 Completed 200 OK in 92ms (Views: 80.9ms | ActiveRecord: 5.7ms | Allocations: 51741)
 
 
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Destroy (0.7ms)[0m  [1m[31mDELETE FROM "courses" WHERE "courses"."id" = ?[0m  [["id", 1]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20210125190413)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190413"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRounds (20210125190744)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "name" varchar, "length" integer, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_113d07974c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_c9a5268c3b"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_user_id" ON "rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_course_id" ON "rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190744"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoles (20210125191003)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "holes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "par" integer, "distance" integer, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6d0dd30f7d"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_holes_on_course_id" ON "holes" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191003"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCourses (20210125191122)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "courses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "location" varchar, "par" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191122"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoleRounds (20210126203501)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "hole_rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "score" integer, "result" varchar, "hole_id" integer NOT NULL, "round_id" integer NOT NULL, "user_id" integer NOT NULL, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_92eb9d27af"
+FOREIGN KEY ("hole_id")
+  REFERENCES "holes" ("id")
+, CONSTRAINT "fk_rails_fdd0e2390b"
+FOREIGN KEY ("round_id")
+  REFERENCES "rounds" ("id")
+, CONSTRAINT "fk_rails_6266efa4b5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e277bff764"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_hole_id" ON "hole_rounds" ("hole_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_round_id" ON "hole_rounds" ("round_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_user_id" ON "hole_rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_course_id" ON "hole_rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210126203501"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-01-27 21:36:01.890936"], ["updated_at", "2021-01-27 21:36:01.890936"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes"[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds"[0m
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Pebble Beach"], ["location", "Pebble Beach, CA"], ["par", 72], ["created_at", "2021-01-27 21:36:06.273821"], ["updated_at", "2021-01-27 21:36:06.273821"]]
+  [1m[36mTRANSACTION (2.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Augusta National"], ["location", "Augusta, GA"], ["par", 72], ["created_at", "2021-01-27 21:36:06.280106"], ["updated_at", "2021-01-27 21:36:06.280106"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Wint Point Golf & Country Club"], ["location", "Bainbridge Island, WA"], ["par", 72], ["created_at", "2021-01-27 21:36:06.283127"], ["updated_at", "2021-01-27 21:36:06.283127"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Westchester"], ["location", "Los Angeles, CA"], ["par", 64], ["created_at", "2021-01-27 21:36:06.286447"], ["updated_at", "2021-01-27 21:36:06.286447"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.3ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 426], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.300668"], ["updated_at", "2021-01-27 21:36:06.300668"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.5ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 266], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.305493"], ["updated_at", "2021-01-27 21:36:06.305493"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.6ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 380], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.310196"], ["updated_at", "2021-01-27 21:36:06.310196"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 361], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.315345"], ["updated_at", "2021-01-27 21:36:06.315345"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 277], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.319961"], ["updated_at", "2021-01-27 21:36:06.319961"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 276], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.324315"], ["updated_at", "2021-01-27 21:36:06.324315"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 288], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.329174"], ["updated_at", "2021-01-27 21:36:06.329174"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 314], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.333990"], ["updated_at", "2021-01-27 21:36:06.333990"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 215], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.340144"], ["updated_at", "2021-01-27 21:36:06.340144"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.3ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 351], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.345490"], ["updated_at", "2021-01-27 21:36:06.345490"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.5ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 240], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.350770"], ["updated_at", "2021-01-27 21:36:06.350770"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 209], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.355678"], ["updated_at", "2021-01-27 21:36:06.355678"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 323], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.360605"], ["updated_at", "2021-01-27 21:36:06.360605"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 324], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.365373"], ["updated_at", "2021-01-27 21:36:06.365373"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 390], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.370203"], ["updated_at", "2021-01-27 21:36:06.370203"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 318], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.374895"], ["updated_at", "2021-01-27 21:36:06.374895"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 299], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.380000"], ["updated_at", "2021-01-27 21:36:06.380000"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 200], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.384663"], ["updated_at", "2021-01-27 21:36:06.384663"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["username", "charlie"], ["created_at", "2021-01-27 21:36:06.390447"], ["updated_at", "2021-01-27 21:36:06.390447"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.3ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "length", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "1/26/21 pebble"], ["length", 18], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.403422"], ["updated_at", "2021-01-27 21:36:06.403422"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.4ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "length", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "12/26/20 pebble"], ["length", 18], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.412141"], ["updated_at", "2021-01-27 21:36:06.412141"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 1], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.452158"], ["updated_at", "2021-01-27 21:36:06.452158"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 2], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.460048"], ["updated_at", "2021-01-27 21:36:06.460048"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 3], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.468371"], ["updated_at", "2021-01-27 21:36:06.468371"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 4], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.476378"], ["updated_at", "2021-01-27 21:36:06.476378"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 5], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.483873"], ["updated_at", "2021-01-27 21:36:06.483873"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 6], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.491814"], ["updated_at", "2021-01-27 21:36:06.491814"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 7], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.501299"], ["updated_at", "2021-01-27 21:36:06.501299"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 8], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.508554"], ["updated_at", "2021-01-27 21:36:06.508554"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 9], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.516921"], ["updated_at", "2021-01-27 21:36:06.516921"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 10], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.524644"], ["updated_at", "2021-01-27 21:36:06.524644"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 11], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.534072"], ["updated_at", "2021-01-27 21:36:06.534072"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 12], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.543309"], ["updated_at", "2021-01-27 21:36:06.543309"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 13], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.552499"], ["updated_at", "2021-01-27 21:36:06.552499"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 14], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.560194"], ["updated_at", "2021-01-27 21:36:06.560194"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 15], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.567983"], ["updated_at", "2021-01-27 21:36:06.567983"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 16], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.577510"], ["updated_at", "2021-01-27 21:36:06.577510"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 17], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.586991"], ["updated_at", "2021-01-27 21:36:06.586991"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 18], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.608687"], ["updated_at", "2021-01-27 21:36:06.608687"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 1], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.618106"], ["updated_at", "2021-01-27 21:36:06.618106"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 2], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.626521"], ["updated_at", "2021-01-27 21:36:06.626521"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 3], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.637268"], ["updated_at", "2021-01-27 21:36:06.637268"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 4], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.645888"], ["updated_at", "2021-01-27 21:36:06.645888"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 5], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.654178"], ["updated_at", "2021-01-27 21:36:06.654178"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 6], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.663182"], ["updated_at", "2021-01-27 21:36:06.663182"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 7], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.672251"], ["updated_at", "2021-01-27 21:36:06.672251"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 8], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.681487"], ["updated_at", "2021-01-27 21:36:06.681487"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 9], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.690838"], ["updated_at", "2021-01-27 21:36:06.690838"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 10], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.701373"], ["updated_at", "2021-01-27 21:36:06.701373"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 11], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.709583"], ["updated_at", "2021-01-27 21:36:06.709583"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 12], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.718671"], ["updated_at", "2021-01-27 21:36:06.718671"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 13], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.727097"], ["updated_at", "2021-01-27 21:36:06.727097"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 14], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.747890"], ["updated_at", "2021-01-27 21:36:06.747890"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 15], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.756851"], ["updated_at", "2021-01-27 21:36:06.756851"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 16], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.765309"], ["updated_at", "2021-01-27 21:36:06.765309"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 17], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.774292"], ["updated_at", "2021-01-27 21:36:06.774292"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 18], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 21:36:06.783485"], ["updated_at", "2021-01-27 21:36:06.783485"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[36mcommit transaction[0m
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:36:16 -0800
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RoundsController#index as HTML
+  Parameters: {"username"=>"charlie"}
+  [1m[36mRound Load (0.3ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", nil]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+Completed 200 OK in 21ms (Views: 2.9ms | ActiveRecord: 0.7ms | Allocations: 6512)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:36:18 -0800
+Processing by RoundsController#index as HTML
+  Parameters: {"username"=>"charlie"}
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", nil]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.1ms | Allocations: 655)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:37:09 -0800
+Processing by RoundsController#index as HTML
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 106ms (Views: 86.8ms | ActiveRecord: 5.8ms | Allocations: 58503)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:37:21 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 596)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:37:22 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.3ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 67ms (Views: 62.1ms | ActiveRecord: 3.0ms | Allocations: 29111)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:37:52 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:14:in `login'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 10ms (Views: 0.3ms | ActiveRecord: 1.0ms | Allocations: 6130)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:37:53 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.3ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.3ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 85ms (Views: 62.3ms | ActiveRecord: 5.8ms | Allocations: 50258)
+
+
+Started DELETE "/rounds/2" for ::1 at 2021-01-27 13:37:55 -0800
+  
+AbstractController::ActionNotFound (The action 'destroy' could not be found for RoundsController):
+  
+actionpack (6.1.1) lib/abstract_controller/base.rb:160:in `process'
+actionpack (6.1.1) lib/action_controller/metal.rb:190:in `dispatch'
+actionpack (6.1.1) lib/action_controller/metal.rb:254:in `dispatch'
+actionpack (6.1.1) lib/action_dispatch/routing/route_set.rb:50:in `dispatch'
+actionpack (6.1.1) lib/action_dispatch/routing/route_set.rb:33:in `serve'
+actionpack (6.1.1) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (6.1.1) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (6.1.1) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (6.1.1) lib/action_dispatch/routing/route_set.rb:842:in `call'
+rack (2.2.3) lib/rack/etag.rb:27:in `call'
+rack (2.2.3) lib/rack/conditional_get.rb:40:in `call'
+rack (2.2.3) lib/rack/head.rb:12:in `call'
+activerecord (6.1.1) lib/active_record/migration.rb:601:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (6.1.1) lib/active_support/callbacks.rb:98:in `run_callbacks'
+actionpack (6.1.1) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/actionable_exceptions.rb:18:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:29:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.1.1) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.1.1) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.1.1) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (6.1.1) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (6.1.1) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (6.1.1) lib/rails/rack/logger.rb:26:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.1.1) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/static.rb:24:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.1.1) lib/action_dispatch/middleware/host_authorization.rb:98:in `call'
+rack-cors (1.1.1) lib/rack/cors.rb:100:in `call'
+railties (6.1.1) lib/rails/engine.rb:539:in `call'
+puma (5.1.1) lib/puma/configuration.rb:246:in `call'
+puma (5.1.1) lib/puma/request.rb:76:in `block in handle_request'
+puma (5.1.1) lib/puma/thread_pool.rb:337:in `with_force_shutdown'
+puma (5.1.1) lib/puma/request.rb:75:in `handle_request'
+puma (5.1.1) lib/puma/server.rb:431:in `process_client'
+puma (5.1.1) lib/puma/thread_pool.rb:145:in `block in spawn_thread'
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:37:55 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 50ms (Views: 45.3ms | ActiveRecord: 3.5ms | Allocations: 29109)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:38:15 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:14:in `login'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 11ms (Views: 0.3ms | ActiveRecord: 1.2ms | Allocations: 6113)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:38:16 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.4ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 75ms (Views: 64.9ms | ActiveRecord: 5.3ms | Allocations: 50237)
+
+
+Started DELETE "/rounds/2" for ::1 at 2021-01-27 13:38:17 -0800
+Processing by RoundsController#destroy as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mRound Load (0.3ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:21:in `destroy'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mRound Destroy (1.0ms)[0m  [1m[31mDELETE FROM "rounds" WHERE "rounds"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 1.8ms | Allocations: 2066)
+
+
+  
+ActiveRecord::InvalidForeignKey (SQLite3::ConstraintException: FOREIGN KEY constraint failed):
+  
+app/controllers/rounds_controller.rb:22:in `destroy'
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:38:18 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 48ms (Views: 43.1ms | ActiveRecord: 3.3ms | Allocations: 29109)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:40:16 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:14:in `login'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 11ms (Views: 0.3ms | ActiveRecord: 1.5ms | Allocations: 6107)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:40:17 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 89ms (Views: 79.3ms | ActiveRecord: 4.8ms | Allocations: 50214)
+
+
+Started DELETE "/rounds/2" for ::1 at 2021-01-27 13:40:18 -0800
+Processing by RoundsController#destroy as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:21:in `destroy'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mRound Destroy (0.5ms)[0m  [1m[31mDELETE FROM "rounds" WHERE "rounds"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[31mrollback transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 1.1ms | Allocations: 2017)
+
+
+  
+ActiveRecord::InvalidForeignKey (SQLite3::ConstraintException: FOREIGN KEY constraint failed):
+  
+app/controllers/rounds_controller.rb:22:in `destroy'
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:40:19 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.7ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 101ms (Views: 96.3ms | ActiveRecord: 3.8ms | Allocations: 33037)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:40:40 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:14:in `login'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 10ms (Views: 0.4ms | ActiveRecord: 1.2ms | Allocations: 6129)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:40:41 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Course Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mCACHE Hole Load (0.0ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 72ms (Views: 62.8ms | ActiveRecord: 4.7ms | Allocations: 50317)
+
+
+Started DELETE "/rounds/2" for ::1 at 2021-01-27 13:40:42 -0800
+Processing by RoundsController#destroy as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:21:in `destroy'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 2]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.4ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 19]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 20]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 21]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 22]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.2ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 23]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.2ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 24]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 25]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 26]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 27]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 28]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 29]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 30]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.2ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 31]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 32]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 33]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 34]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 35]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mHoleRound Destroy (0.1ms)[0m  [1m[31mDELETE FROM "hole_rounds" WHERE "hole_rounds"."id" = ?[0m  [["id", 36]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mRound Destroy (0.2ms)[0m  [1m[31mDELETE FROM "rounds" WHERE "rounds"."id" = ?[0m  [["id", 2]]
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/rounds_controller.rb:22:in `destroy'
+Completed 204 No Content in 28ms (ActiveRecord: 3.6ms | Allocations: 18570)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:40:42 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.5ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.8ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.3ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 60ms (Views: 55.2ms | ActiveRecord: 4.2ms | Allocations: 15494)
+
+
+Started PATCH "/rounds/1" for ::1 at 2021-01-27 13:40:49 -0800
+Processing by RoundsController#update as */*
+  Parameters: {"name"=>"WORK", "id"=>"1", "round"=>{"name"=>"WORK"}}
+Completed 500 Internal Server Error in 0ms (ActiveRecord: 0.0ms | Allocations: 90)
+
+
+  
+ArgumentError (wrong number of arguments (given 1, expected 0)):
+  
+app/controllers/rounds_controller.rb:26:in `update'
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:40:49 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 28ms (Views: 24.0ms | ActiveRecord: 2.5ms | Allocations: 15492)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 13:41:44 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/users_controller.rb:14:in `login'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 10ms (Views: 0.4ms | ActiveRecord: 1.0ms | Allocations: 6106)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:41:45 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 68ms (Views: 58.7ms | ActiveRecord: 4.9ms | Allocations: 36673)
+
+
+Started PATCH "/rounds/1" for ::1 at 2021-01-27 13:41:51 -0800
+Processing by RoundsController#update as */*
+  Parameters: {"name"=>"MYROUND", "id"=>"1", "round"=>{"name"=>"MYROUND"}}
+  [1m[36mRound Load (0.3ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:26:in `update'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mRound Update (0.3ms)[0m  [1m[33mUPDATE "rounds" SET "name" = ?, "updated_at" = ? WHERE "rounds"."id" = ?[0m  [["name", "MYROUND"], ["updated_at", "2021-01-27 21:41:51.308580"], ["id", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 1.6ms | Allocations: 4427)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:41:51 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 45ms (Views: 41.3ms | ActiveRecord: 2.8ms | Allocations: 15493)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:41:58 -0800
+Processing by RoundsController#index as HTML
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 41ms (Views: 37.2ms | ActiveRecord: 2.4ms | Allocations: 15492)
+
+
+Started PATCH "/rounds/1" for ::1 at 2021-01-27 13:42:07 -0800
+Processing by RoundsController#update as */*
+  Parameters: {"name"=>"ROUND", "id"=>"1", "round"=>{"name"=>"ROUND"}}
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:26:in `update'
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mRound Update (0.3ms)[0m  [1m[33mUPDATE "rounds" SET "name" = ?, "updated_at" = ? WHERE "rounds"."id" = ?[0m  [["name", "ROUND"], ["updated_at", "2021-01-27 21:42:07.606189"], ["id", 1]]
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/rounds_controller.rb:28:in `update'
+Completed 200 OK in 7ms (Views: 0.2ms | ActiveRecord: 1.6ms | Allocations: 3832)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:42:07 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 54ms (Views: 50.6ms | ActiveRecord: 2.4ms | Allocations: 15494)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:42:10 -0800
+Processing by RoundsController#index as HTML
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.3ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 35ms (Views: 30.1ms | ActiveRecord: 3.1ms | Allocations: 15489)
+
+
