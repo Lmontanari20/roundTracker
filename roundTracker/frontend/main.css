@@ -17,3 +17,15 @@ img {
     text-align: center;
     background-color: aliceblue;
 }
+
+.card {
+    display: inline-block;
+    border-style: solid;
+    border-color: rgb(158, 50, 8);
+    border-radius: 25px;
+}
+
+button {
+    border-radius: 25px;
+    border-color: rgb(158, 50, 8);
+}

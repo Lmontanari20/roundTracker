@@ -18,7 +18,7 @@ function addEventListeners() {
     signup.addEventListener("click", () => postUser(form));
     welcome.addEventListener("click", () => renderWelcome());
     newRound.addEventListener("click", () => renderCreateRound(localStorage.user))
-    //rounds.addEventListener("click", () => )
+    rounds.addEventListener("click", () => fetchPrevRounds())
 
 }
 
@@ -33,7 +33,12 @@ function postUser(form) {
         body: JSON.stringify({username: form.name.value})
     })
     .then(resp => resp.json())
-    .then(obj => signedIn(obj))
+    .then(obj => {
+        document.getElementById('login').textContent = 'Logout'
+        localStorage.setItem('user', obj.username);
+        document.getElementById('signup').style.visibility = "hidden"
+        renderCreateRound(localStorage.user)
+    })
 }
 
 // get the user on login
@@ -207,4 +212,108 @@ function clearMain() {
         main.removeChild(main.firstChild)
     }
     //main.childNodes.forEach((child) => main.removeChild(child))
+}
+
+function fetchPrevRounds() {
+    username = localStorage.user
+    fetch(`http://localhost:3000/user_rounds/${username}`)
+    .then(resp => resp.json())
+    .then(rounds => {
+        console.log(rounds)
+        clearMain()
+        rounds.forEach(round => renderRound(round))
+    })
+    .catch(error => console.log(error.message))
+}
+
+function renderRound(round) {
+    console.log("made it to render round")
+    let holeRounds = round.hole_rounds
+    let main = document.getElementById('main')
+    let card = document.createElement('div')
+    let cardBody = document.createElement('div')
+    let cardForm = document.createElement('form')
+    let titleLabel = document.createElement('h5')
+    let titleInput = document.createElement('input')
+    let lengthLabel = document.createElement('h5')
+    let courseLabel = document.createElement('h5')
+    let parLabel = document.createElement('h5')
+    let scoreLabel = document.createElement('h5')
+    let scoreInput = document.createElement('input')
+    let del = document.createElement('button')
+    let upd = document.createElement('button')
+    let br = document.createElement('br')
+
+    card.className = 'card'
+    card.id = round.id
+    cardBody.className = 'card-body'
+    titleLabel.textContent = "Round Name:"
+    titleInput.value = round.name
+    titleInput.name = "name"
+    titleLabel.style.position = "inline"
+    lengthLabel.textContent = `Round Length: ${round.length} holes`
+    courseLabel.textContent = `Course Name: ${round.course.name}`
+    parLabel.textContent = `Course Par: ${round.course.par}`
+    scoreLabel.textContent = "Round Score:"
+    scoreInput.value = calculateScore(holeRounds)
+    scoreInput.name = "score"
+    del.textContent = "Delete"
+    del.addEventListener('click', () => deleteRound(round.id))
+    upd.textContent = "Update"
+    upd.addEventListener('click', (e) => updateRound(e, cardForm, round.id))
+    cardForm.append(titleLabel, titleInput, lengthLabel, courseLabel, parLabel, scoreLabel, scoreInput, br, del, upd)
+    cardBody.appendChild(cardForm)
+    card.appendChild(cardBody)
+    main.appendChild(card)
+}
+
+function deleteRound(id) {
+    // debugger
+    fetch(`http://localhost:3000/rounds/${id}`, {
+        method: "DELETE"
+    })
+    .then(() => {
+        fetchPrevRounds()
+        let alert = document.createElement("div");
+        alert.className="alert alert-danger";
+        alert.textContent = "Round deleted successfully, next time swing better.";
+
+        let body = document.querySelector('body');
+        body.appendChild(alert);
+
+        setTimeout(() => {body.removeChild(alert)}, 2000);
+    })
+}
+
+function updateRound(e, form, id) {
+    e.preventDefault()
+    let roundName = {name: form.name.value}
+    fetch(`http://localhost:3000/rounds/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            "Accepts": "application/json"
+        },
+        body: JSON.stringify(roundName)
+    })
+    .then(resp => resp.json())
+    .then((obj) => {
+        fetchPrevRounds()
+        let alert = document.createElement("div");
+        alert.className="alert alert-danger";
+        alert.textContent = "Round updated successfully";
+
+        let body = document.querySelector('body');
+        body.appendChild(alert);
+
+        setTimeout(() => {body.removeChild(alert)}, 2000);
+    })
+}
+
+function calculateScore(holeRounds) {
+    let sum = 0;
+    holeRounds.forEach(hole => {
+        sum += hole.score
+    })
+    return sum 
 }
