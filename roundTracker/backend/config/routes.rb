@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   
   get '/login/:username', to: 'users#login' 
   get '/login', to: 'users#error'
+  get '/user_rounds/:username', to: 'rounds#index'
+  
 end

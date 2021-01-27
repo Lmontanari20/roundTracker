@@ -2,8 +2,8 @@ class RoundsController < ApplicationController
 
     
     def index 
-        # user = User.find_by(username: params[:username])
-        rounds = Round.where(:user_id => 1)
+        user = User.find_by(username: params[:username])
+        rounds = Round.where(:user_id => user.id)
         render json: rounds, include: [:course, :hole_rounds]
     end
     
@@ -17,7 +17,7 @@ class RoundsController < ApplicationController
         render json: round
     end
 
-    def delete
+    def destroy
         round = Round.find(params [:id])
         round.destroy 
     end
