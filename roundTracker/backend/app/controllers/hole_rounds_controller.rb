@@ -1,0 +1,2 @@
+class HoleRoundsController < ApplicationController
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_183243) do
+ActiveRecord::Schema.define(version: 2021_01_26_203501) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
@@ -20,13 +20,23 @@ ActiveRecord::Schema.define(version: 2021_01_26_183243) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "holes", force: :cascade do |t|
-    t.integer "par"
+  create_table "hole_rounds", force: :cascade do |t|
     t.integer "score"
-    t.string "result"
-    t.integer "distance"
+    t.integer "hole_id", null: false
+    t.integer "round_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["hole_id"], name: "index_hole_rounds_on_hole_id"
+    t.index ["round_id"], name: "index_hole_rounds_on_round_id"
+  end
+
+  create_table "holes", force: :cascade do |t|
+    t.integer "par"
+    t.integer "distance"
+    t.integer "course_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_holes_on_course_id"
   end
 
   create_table "rounds", force: :cascade do |t|
@@ -35,7 +45,6 @@ ActiveRecord::Schema.define(version: 2021_01_26_183243) do
     t.integer "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "score"
     t.index ["course_id"], name: "index_rounds_on_course_id"
     t.index ["user_id"], name: "index_rounds_on_user_id"
   end
@@ -46,6 +55,9 @@ ActiveRecord::Schema.define(version: 2021_01_26_183243) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "hole_rounds", "holes"
+  add_foreign_key "hole_rounds", "rounds"
+  add_foreign_key "holes", "courses"
   add_foreign_key "rounds", "courses"
   add_foreign_key "rounds", "users"
 end
