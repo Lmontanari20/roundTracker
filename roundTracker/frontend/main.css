@@ -2,9 +2,17 @@ body {
     background-color: #009900;
 }
 
+h2, h4 {
+    font-family: Marker Felt, fantasy;
+}
+
+img {
+    border-radius: 25px;
+}
+
 #main {
     margin: auto;
-    /* height: 90vh; */
+    border-radius: 25px;
     width: 50%;
     text-align: center;
     background-color: aliceblue;
