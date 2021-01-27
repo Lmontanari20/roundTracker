@@ -22,12 +22,17 @@ ActiveRecord::Schema.define(version: 2021_01_26_203501) do
 
   create_table "hole_rounds", force: :cascade do |t|
     t.integer "score"
+    t.string "result"
     t.integer "hole_id", null: false
     t.integer "round_id", null: false
+    t.integer "user_id", null: false
+    t.integer "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["course_id"], name: "index_hole_rounds_on_course_id"
     t.index ["hole_id"], name: "index_hole_rounds_on_hole_id"
     t.index ["round_id"], name: "index_hole_rounds_on_round_id"
+    t.index ["user_id"], name: "index_hole_rounds_on_user_id"
   end
 
   create_table "holes", force: :cascade do |t|
@@ -55,8 +60,10 @@ ActiveRecord::Schema.define(version: 2021_01_26_203501) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "hole_rounds", "courses"
   add_foreign_key "hole_rounds", "holes"
   add_foreign_key "hole_rounds", "rounds"
+  add_foreign_key "hole_rounds", "users"
   add_foreign_key "holes", "courses"
   add_foreign_key "rounds", "courses"
   add_foreign_key "rounds", "users"

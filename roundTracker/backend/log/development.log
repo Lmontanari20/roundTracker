@@ -17940,3 +17940,978 @@ FOREIGN KEY ("round_id")
   [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
   [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
   [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" ORDER BY "hole_rounds"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20210125190413)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190413"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRounds (20210125190744)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "name" varchar, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_113d07974c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_c9a5268c3b"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_user_id" ON "rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_course_id" ON "rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190744"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoles (20210125191003)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "holes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "par" integer, "distance" integer, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6d0dd30f7d"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_holes_on_course_id" ON "holes" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191003"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCourses (20210125191122)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "courses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "location" varchar, "par" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191122"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoleRounds (20210126203501)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "hole_rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "score" integer, "hole_id" integer NOT NULL, "round_id" integer NOT NULL, "user_id" integer NOT NULL, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_92eb9d27af"
+FOREIGN KEY ("hole_id")
+  REFERENCES "holes" ("id")
+, CONSTRAINT "fk_rails_fdd0e2390b"
+FOREIGN KEY ("round_id")
+  REFERENCES "rounds" ("id")
+, CONSTRAINT "fk_rails_6266efa4b5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e277bff764"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_hole_id" ON "hole_rounds" ("hole_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_round_id" ON "hole_rounds" ("round_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_user_id" ON "hole_rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_course_id" ON "hole_rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210126203501"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-01-27 00:06:24.241620"], ["updated_at", "2021-01-27 00:06:24.241620"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes"[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds"[0m
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds"[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.5ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Pebble Beach"], ["location", "Pebble Beach, CA"], ["par", 72], ["created_at", "2021-01-27 00:06:44.730454"], ["updated_at", "2021-01-27 00:06:44.730454"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Augusta National"], ["location", "Augusta, GA"], ["par", 72], ["created_at", "2021-01-27 00:06:44.735129"], ["updated_at", "2021-01-27 00:06:44.735129"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Wint Point Golf & Country Club"], ["location", "Bainbridge Island, WA"], ["par", 72], ["created_at", "2021-01-27 00:06:44.738690"], ["updated_at", "2021-01-27 00:06:44.738690"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Westchester"], ["location", "Los Angeles, CA"], ["par", 64], ["created_at", "2021-01-27 00:06:44.742205"], ["updated_at", "2021-01-27 00:06:44.742205"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 252], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.754704"], ["updated_at", "2021-01-27 00:06:44.754704"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 349], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.759545"], ["updated_at", "2021-01-27 00:06:44.759545"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 246], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.764171"], ["updated_at", "2021-01-27 00:06:44.764171"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 383], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.768867"], ["updated_at", "2021-01-27 00:06:44.768867"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 373], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.773449"], ["updated_at", "2021-01-27 00:06:44.773449"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 425], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.778235"], ["updated_at", "2021-01-27 00:06:44.778235"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 256], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.783035"], ["updated_at", "2021-01-27 00:06:44.783035"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 375], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.787513"], ["updated_at", "2021-01-27 00:06:44.787513"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 404], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.792073"], ["updated_at", "2021-01-27 00:06:44.792073"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 263], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.796655"], ["updated_at", "2021-01-27 00:06:44.796655"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 250], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.801214"], ["updated_at", "2021-01-27 00:06:44.801214"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 383], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.806186"], ["updated_at", "2021-01-27 00:06:44.806186"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 348], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.810807"], ["updated_at", "2021-01-27 00:06:44.810807"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 441], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.815514"], ["updated_at", "2021-01-27 00:06:44.815514"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 404], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.831834"], ["updated_at", "2021-01-27 00:06:44.831834"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 446], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.836976"], ["updated_at", "2021-01-27 00:06:44.836976"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 244], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.846098"], ["updated_at", "2021-01-27 00:06:44.846098"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 226], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.852228"], ["updated_at", "2021-01-27 00:06:44.852228"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["username", "charlie"], ["created_at", "2021-01-27 00:06:44.859055"], ["updated_at", "2021-01-27 00:06:44.859055"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.4ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "1/26/21 pebble"], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.871035"], ["updated_at", "2021-01-27 00:06:44.871035"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.4ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "12/26/20 pebble"], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.877198"], ["updated_at", "2021-01-27 00:06:44.877198"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 1], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.892068"], ["updated_at", "2021-01-27 00:06:44.892068"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 2], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.900614"], ["updated_at", "2021-01-27 00:06:44.900614"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 3], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.908264"], ["updated_at", "2021-01-27 00:06:44.908264"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 4], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.916073"], ["updated_at", "2021-01-27 00:06:44.916073"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 5], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.923431"], ["updated_at", "2021-01-27 00:06:44.923431"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 6], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.930825"], ["updated_at", "2021-01-27 00:06:44.930825"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.6ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 7], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.951377"], ["updated_at", "2021-01-27 00:06:44.951377"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 8], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.960318"], ["updated_at", "2021-01-27 00:06:44.960318"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.6ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 9], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.970465"], ["updated_at", "2021-01-27 00:06:44.970465"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 10], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.979708"], ["updated_at", "2021-01-27 00:06:44.979708"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 11], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.988472"], ["updated_at", "2021-01-27 00:06:44.988472"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 12], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:44.997444"], ["updated_at", "2021-01-27 00:06:44.997444"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 13], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.006262"], ["updated_at", "2021-01-27 00:06:45.006262"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 14], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.014657"], ["updated_at", "2021-01-27 00:06:45.014657"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 15], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.022579"], ["updated_at", "2021-01-27 00:06:45.022579"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 16], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.030780"], ["updated_at", "2021-01-27 00:06:45.030780"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 17], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.047058"], ["updated_at", "2021-01-27 00:06:45.047058"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 18], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.055943"], ["updated_at", "2021-01-27 00:06:45.055943"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 1], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.064129"], ["updated_at", "2021-01-27 00:06:45.064129"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 2], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.072823"], ["updated_at", "2021-01-27 00:06:45.072823"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 3], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.081049"], ["updated_at", "2021-01-27 00:06:45.081049"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 4], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.088723"], ["updated_at", "2021-01-27 00:06:45.088723"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 5], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.096796"], ["updated_at", "2021-01-27 00:06:45.096796"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 6], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.104720"], ["updated_at", "2021-01-27 00:06:45.104720"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 7], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.112712"], ["updated_at", "2021-01-27 00:06:45.112712"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 8], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.120389"], ["updated_at", "2021-01-27 00:06:45.120389"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 9], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.136377"], ["updated_at", "2021-01-27 00:06:45.136377"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 10], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.144359"], ["updated_at", "2021-01-27 00:06:45.144359"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 11], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.152835"], ["updated_at", "2021-01-27 00:06:45.152835"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 12], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.160754"], ["updated_at", "2021-01-27 00:06:45.160754"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 13], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.169081"], ["updated_at", "2021-01-27 00:06:45.169081"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 14], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.177210"], ["updated_at", "2021-01-27 00:06:45.177210"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 15], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.185398"], ["updated_at", "2021-01-27 00:06:45.185398"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 16], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.192791"], ["updated_at", "2021-01-27 00:06:45.192791"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 17], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.200542"], ["updated_at", "2021-01-27 00:06:45.200542"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 18], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:06:45.216412"], ["updated_at", "2021-01-27 00:06:45.216412"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateUsers (20210125190413)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190413"]]
+  [1m[36mTRANSACTION (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRounds (20210125190744)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "name" varchar, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_113d07974c"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_c9a5268c3b"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_user_id" ON "rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_rounds_on_course_id" ON "rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125190744"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoles (20210125191003)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "holes" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "par" integer, "distance" integer, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_6d0dd30f7d"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_holes_on_course_id" ON "holes" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191003"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateCourses (20210125191122)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "courses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "location" varchar, "par" integer, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210125191122"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateHoleRounds (20210126203501)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "hole_rounds" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "score" integer, "result" varchar, "hole_id" integer NOT NULL, "round_id" integer NOT NULL, "user_id" integer NOT NULL, "course_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_92eb9d27af"
+FOREIGN KEY ("hole_id")
+  REFERENCES "holes" ("id")
+, CONSTRAINT "fk_rails_fdd0e2390b"
+FOREIGN KEY ("round_id")
+  REFERENCES "rounds" ("id")
+, CONSTRAINT "fk_rails_6266efa4b5"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e277bff764"
+FOREIGN KEY ("course_id")
+  REFERENCES "courses" ("id")
+)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_hole_id" ON "hole_rounds" ("hole_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_round_id" ON "hole_rounds" ("round_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_user_id" ON "hole_rounds" ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_hole_rounds_on_course_id" ON "hole_rounds" ("course_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20210126203501"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-01-27 00:09:02.477559"], ["updated_at", "2021-01-27 00:09:02.477559"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses"[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds"[0m
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds"[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Pebble Beach"], ["location", "Pebble Beach, CA"], ["par", 72], ["created_at", "2021-01-27 00:09:13.732217"], ["updated_at", "2021-01-27 00:09:13.732217"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Augusta National"], ["location", "Augusta, GA"], ["par", 72], ["created_at", "2021-01-27 00:09:13.735991"], ["updated_at", "2021-01-27 00:09:13.735991"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.4ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Wint Point Golf & Country Club"], ["location", "Bainbridge Island, WA"], ["par", 72], ["created_at", "2021-01-27 00:09:13.739371"], ["updated_at", "2021-01-27 00:09:13.739371"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Create (0.3ms)[0m  [1m[32mINSERT INTO "courses" ("name", "location", "par", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["name", "Westchester"], ["location", "Los Angeles, CA"], ["par", 64], ["created_at", "2021-01-27 00:09:13.743252"], ["updated_at", "2021-01-27 00:09:13.743252"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 219], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.755765"], ["updated_at", "2021-01-27 00:09:13.755765"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 397], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.760754"], ["updated_at", "2021-01-27 00:09:13.760754"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 406], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.765705"], ["updated_at", "2021-01-27 00:09:13.765705"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 228], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.770615"], ["updated_at", "2021-01-27 00:09:13.770615"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 326], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.775284"], ["updated_at", "2021-01-27 00:09:13.775284"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 311], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.779699"], ["updated_at", "2021-01-27 00:09:13.779699"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 311], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.784412"], ["updated_at", "2021-01-27 00:09:13.784412"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 413], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.789378"], ["updated_at", "2021-01-27 00:09:13.789378"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 284], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.794049"], ["updated_at", "2021-01-27 00:09:13.794049"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 229], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.798376"], ["updated_at", "2021-01-27 00:09:13.798376"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 412], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.802856"], ["updated_at", "2021-01-27 00:09:13.802856"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 3], ["distance", 305], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.807358"], ["updated_at", "2021-01-27 00:09:13.807358"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 412], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.811725"], ["updated_at", "2021-01-27 00:09:13.811725"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 320], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.816532"], ["updated_at", "2021-01-27 00:09:13.816532"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 5], ["distance", 436], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.833287"], ["updated_at", "2021-01-27 00:09:13.833287"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.3ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 388], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.837702"], ["updated_at", "2021-01-27 00:09:13.837702"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 240], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.845968"], ["updated_at", "2021-01-27 00:09:13.845968"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Create (0.4ms)[0m  [1m[32mINSERT INTO "holes" ("par", "distance", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["par", 4], ["distance", 201], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.851594"], ["updated_at", "2021-01-27 00:09:13.851594"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Create (0.3ms)[0m  [1m[32mINSERT INTO "users" ("username", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["username", "charlie"], ["created_at", "2021-01-27 00:09:13.857791"], ["updated_at", "2021-01-27 00:09:13.857791"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.4ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "1/26/21 pebble"], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.870476"], ["updated_at", "2021-01-27 00:09:13.870476"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Create (0.4ms)[0m  [1m[32mINSERT INTO "rounds" ("user_id", "name", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["user_id", 1], ["name", "12/26/20 pebble"], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.875949"], ["updated_at", "2021-01-27 00:09:13.875949"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 1], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.891517"], ["updated_at", "2021-01-27 00:09:13.891517"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 2], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.899226"], ["updated_at", "2021-01-27 00:09:13.899226"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 3], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.907029"], ["updated_at", "2021-01-27 00:09:13.907029"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 4], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.914646"], ["updated_at", "2021-01-27 00:09:13.914646"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.3ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 5], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.921849"], ["updated_at", "2021-01-27 00:09:13.921849"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 6], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.928951"], ["updated_at", "2021-01-27 00:09:13.928951"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 7], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.948802"], ["updated_at", "2021-01-27 00:09:13.948802"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 8], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.956455"], ["updated_at", "2021-01-27 00:09:13.956455"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 9], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.965515"], ["updated_at", "2021-01-27 00:09:13.965515"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 10], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.973967"], ["updated_at", "2021-01-27 00:09:13.973967"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 11], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.982328"], ["updated_at", "2021-01-27 00:09:13.982328"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 12], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.990385"], ["updated_at", "2021-01-27 00:09:13.990385"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 13], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:13.998292"], ["updated_at", "2021-01-27 00:09:13.998292"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 14], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.006349"], ["updated_at", "2021-01-27 00:09:14.006349"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 15], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.014169"], ["updated_at", "2021-01-27 00:09:14.014169"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.3ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 16], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.021785"], ["updated_at", "2021-01-27 00:09:14.021785"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 17], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.037719"], ["updated_at", "2021-01-27 00:09:14.037719"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 18], ["round_id", 1], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.045585"], ["updated_at", "2021-01-27 00:09:14.045585"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 1], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.054050"], ["updated_at", "2021-01-27 00:09:14.054050"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 2], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.061746"], ["updated_at", "2021-01-27 00:09:14.061746"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 3], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.069746"], ["updated_at", "2021-01-27 00:09:14.069746"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 4], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.077473"], ["updated_at", "2021-01-27 00:09:14.077473"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 5], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.085717"], ["updated_at", "2021-01-27 00:09:14.085717"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 6], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.094122"], ["updated_at", "2021-01-27 00:09:14.094122"]]
+  [1m[36mTRANSACTION (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 7], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.101838"], ["updated_at", "2021-01-27 00:09:14.101838"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 8], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.109331"], ["updated_at", "2021-01-27 00:09:14.109331"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 9], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.124704"], ["updated_at", "2021-01-27 00:09:14.124704"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 9], ["hole_id", 10], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.132991"], ["updated_at", "2021-01-27 00:09:14.132991"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.5ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 5], ["hole_id", 11], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.141000"], ["updated_at", "2021-01-27 00:09:14.141000"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 12], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.149867"], ["updated_at", "2021-01-27 00:09:14.149867"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 6], ["hole_id", 13], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.158086"], ["updated_at", "2021-01-27 00:09:14.158086"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 14], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.166134"], ["updated_at", "2021-01-27 00:09:14.166134"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 4], ["hole_id", 15], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.174391"], ["updated_at", "2021-01-27 00:09:14.174391"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 7], ["hole_id", 16], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.181944"], ["updated_at", "2021-01-27 00:09:14.181944"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.0ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 3], ["hole_id", 17], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.189997"], ["updated_at", "2021-01-27 00:09:14.189997"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mRound Load (0.0ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Create (0.4ms)[0m  [1m[32mINSERT INTO "hole_rounds" ("score", "hole_id", "round_id", "user_id", "course_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["score", 8], ["hole_id", 18], ["round_id", 2], ["user_id", 1], ["course_id", 1], ["created_at", "2021-01-27 00:09:14.197815"], ["updated_at", "2021-01-27 00:09:14.197815"]]
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" /* loading for inspect */ LIMIT ?[0m  [["LIMIT", 11]]
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" ORDER BY "users"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHoleRound Load (0.4ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" INNER JOIN "holes" ON "hole_rounds"."hole_id" = "holes"."id" INNER JOIN "courses" ON "holes"."course_id" = "courses"."id" INNER JOIN "rounds" ON "courses"."id" = "rounds"."course_id" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" ORDER BY "hole_rounds"."id" ASC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" ORDER BY "hole_rounds"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" ORDER BY "hole_rounds"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHole Load (0.3ms)[0m  [1m[34mSELECT "holes".* FROM "holes" ORDER BY "holes"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" ORDER BY "hole_rounds"."id" DESC LIMIT ?[0m  [["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHoleRound Load (0.3ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds"[0m
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
