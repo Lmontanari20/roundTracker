@@ -216,6 +216,10 @@ function clearMain() {
 
 function fetchPrevRounds() {
     username = localStorage.user
+    if(typeof username === 'undefined'){
+        renderWelcome();
+        return
+    }
     fetch(`http://localhost:3000/user_rounds/${username}`)
     .then(resp => resp.json())
     .then(rounds => {

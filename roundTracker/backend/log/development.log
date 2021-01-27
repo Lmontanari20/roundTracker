@@ -21508,3 +21508,527 @@ Processing by RoundsController#index as HTML
 Completed 200 OK in 35ms (Views: 30.1ms | ActiveRecord: 3.1ms | Allocations: 15489)
 
 
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 13:47:30 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.3ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.4ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 27ms (Views: 21.1ms | ActiveRecord: 3.1ms | Allocations: 16030)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:00:01 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 26ms (Views: 21.2ms | ActiveRecord: 2.8ms | Allocations: 16030)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:00:03 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 33ms (Views: 29.1ms | ActiveRecord: 2.2ms | Allocations: 15494)
+
+
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:13 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms | Allocations: 902)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:16 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.1ms | Allocations: 891)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:18 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms | Allocations: 891)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:21 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.1ms | Allocations: 891)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:22 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.1ms | Allocations: 891)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:23 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.1ms | Allocations: 890)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:41 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.1ms | Allocations: 890)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/user_rounds/undefined" for ::1 at 2021-01-27 14:00:45 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"undefined"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "undefined"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.2ms | Allocations: 890)
+
+
+  
+NoMethodError (undefined method `id' for nil:NilClass):
+  
+app/controllers/rounds_controller.rb:6:in `index'
+Started GET "/login/lucas" for 127.0.0.1 at 2021-01-27 14:01:53 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"lucas"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "lucas"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 1ms (Views: 0.1ms | ActiveRecord: 0.1ms | Allocations: 492)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 14:01:59 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:02:00 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 40ms (Views: 36.2ms | ActiveRecord: 2.3ms | Allocations: 15494)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:02:04 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.1ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.1ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 43ms (Views: 39.3ms | ActiveRecord: 2.3ms | Allocations: 15493)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:02:07 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 43ms (Views: 39.5ms | ActiveRecord: 2.4ms | Allocations: 15493)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:02:09 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.2ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 52ms (Views: 48.2ms | ActiveRecord: 2.3ms | Allocations: 15494)
+
+
+Started GET "/user_rounds/charlie" for ::1 at 2021-01-27 14:02:12 -0800
+Processing by RoundsController#index as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:5:in `index'
+  [1m[36mRound Load (0.1ms)[0m  [1m[34mSELECT "rounds".* FROM "rounds" WHERE "rounds"."user_id" = ?[0m  [["user_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mCourse Load (0.2ms)[0m  [1m[34mSELECT "courses".* FROM "courses" WHERE "courses"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHoleRound Load (0.2ms)[0m  [1m[34mSELECT "hole_rounds".* FROM "hole_rounds" WHERE "hole_rounds"."round_id" = ?[0m  [["round_id", 1]]
+  ↳ app/controllers/rounds_controller.rb:7:in `index'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.2ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+  [1m[36mHole Load (0.1ms)[0m  [1m[34mSELECT "holes".* FROM "holes" WHERE "holes"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/models/hole_round.rb:8:in `result'
+Completed 200 OK in 30ms (Views: 26.3ms | ActiveRecord: 2.5ms | Allocations: 15493)
+
+
+Started GET "/login/charlie" for 127.0.0.1 at 2021-01-27 14:02:51 -0800
+Processing by UsersController#login as */*
+  Parameters: {"username"=>"charlie"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "charlie"], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:14:in `login'
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 580)
+
+
