@@ -16,15 +16,15 @@ end
 
 User.create(username: "charlie")
 
-Round.create(user_id: 1, name: '1/26/21 pebble', course_id: 1)
-Round.create(user_id: 1, name: '12/26/20 pebble', course_id: 1)
+Round.create(user_id: 1, name: '1/26/21 pebble', course_id: 1, length: 18)
+Round.create(user_id: 1, name: '12/26/20 pebble', course_id: 1, length: 18)
 
 
 18.times do |x|
-   HoleRound.create(score: rand(3..9), hole_id: x + 1, round_id: 1)
+   HoleRound.create(score: rand(3..9), hole_id: x + 1, round_id: 1, user_id: 1, course_id: 1)
 end
 
 
 18.times do |x|
-   HoleRound.create(score: rand(3..9), hole_id: x + 1 , round_id: 2)
+   HoleRound.create(score: rand(3..9), hole_id: x + 1 , round_id: 2, user_id: 1, course_id: 1)
 end
