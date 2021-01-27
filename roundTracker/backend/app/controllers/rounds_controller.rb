@@ -5,7 +5,7 @@ class RoundsController < ApplicationController
     end
 
     def new_round
-        
+        round = Round.create(name: params[:name], )
     end
 
 end
