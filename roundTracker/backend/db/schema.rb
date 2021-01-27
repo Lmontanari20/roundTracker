@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_203501) do
   create_table "rounds", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name"
+    t.integer "length"
     t.integer "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

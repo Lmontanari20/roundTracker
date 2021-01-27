@@ -1,11 +1,31 @@
 class RoundsController < ApplicationController
 
+    
+    def index 
+        # user = User.find_by(username: params[:username])
+        rounds = Round.where(:user_id => 1)
+        render json: rounds, include: [:course, :hole_rounds]
+    end
+    
     def analytics
 
     end
 
     def new_round
-        round = Round.create(name: params[:name], )
+        user = User.find_by(username: params[:username])
+        round = Round.create(name: params[:name], length: params[:length], course_id: params[:course_id], user_id: user.id )
+        render json: round
+    end
+
+    def delete
+        round = Round.find(params [:id])
+        round.destroy 
+    end
+
+    def update
+        round = Round.find(params [:id])
+        round.update(name: params[:name], score: params[:score])
+        render json: round
     end
 
 end
