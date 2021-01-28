@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-    def analytics
+    def index
         
     end
 

@@ -162,7 +162,7 @@ function renderCreateRound(user) {
     courseLabel.textContent = "Course Name: ";
     lengthLabel.textContent = "Length of Course: ";
     createRound.textContent = "Start Round";
-    createRound.addEventListener('click', () => renderHole(holes, 1));
+    createRound.addEventListener('click', (e) => renderHole(e,holes, 1));
 
     form.append(header, nameLabel, nameInput, lengthLabel, lengthDropDown, courseLabel, courseDropDown, br, br2, createRound);
     main.append(form);
