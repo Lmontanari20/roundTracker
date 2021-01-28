@@ -32,27 +32,49 @@ function alertMessage(message) {
     let body = document.querySelector('body');
     body.appendChild(alert);
         
-    setTimeout(() => {body.removeChild(alert)}, 2000);
+    setTimeout(() => {body.removeChild(alert)}, 3000);
 }
 
 // post the user on signup 
 function postUser(e, form) {
     e.preventDefault()
-    fetch('http://127.0.0.1:3000/users', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accepts':'application/json'
-        },
-        body: JSON.stringify({username: form.name.value})
+    let signup = document.getElementById('signup');
+    if(signup.textContent === "Signup") {
+        fetch('http://127.0.0.1:3000/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accepts':'application/json'
+            },
+            body: JSON.stringify({username: form.name.value})
+        })
+        .then(resp => resp.json())
+        .then(obj => {
+            document.getElementById('login').textContent = 'Logout'
+            localStorage.setItem('user', obj.username);
+            signup.textContent = "Delete User"
+            document.getElementsByClassName('form-control')[0].style.visibility = "hidden"
+            renderCreateRound(localStorage.user)
+        })
+    }else if (signup.textContent === "Delete User"){
+        deleteUser()
+    }
+}
+
+function deleteUser() {
+    username = localStorage.user
+    fetch(`http://localhost:3000/users/${username}`, {
+        method: "DELETE"
     })
-    .then(resp => resp.json())
-    .then(obj => {
-        document.getElementById('login').textContent = 'Logout'
-        localStorage.setItem('user', obj.username);
-        document.getElementById('signup').style.visibility = "hidden"
-        document.getElementsByClassName('form-control')[0].style.visibility = "hidden"
-        renderCreateRound(localStorage.user)
+    .then(() => {
+        let login = document.getElementById('login')
+        let input = document.getElementById('userinput')
+        alertMessage("Your profile has been deleted...")
+        signup.textContent = "Signup"
+        login.textContent = "login"
+        localStorage.removeItem("user")
+        input.style.visibility = 'visible';
+        input.value = ""
     })
 }
 
@@ -72,10 +94,9 @@ function getUser(e, form) {
             }else {
                 localStorage.setItem('user', obj.username);
                 login.textContent = 'Logout';
-                signup.style.visibility = "hidden";
+                signup.textContent = "Delete User"
                 document.getElementsByClassName('form-control')[0].style.visibility = "hidden";
                 alertMessage('You have signed in Succesfully!!')
-                //renderCreateRound(localStorage.user)
                 renderCreateRound(localStorage.user);
             }
             form.name.value = "";
@@ -85,7 +106,7 @@ function getUser(e, form) {
         form.name.value = "";
         form.name.style.visibility = 'visible';
         login.textContent = "Login";
-        signup.style.visibility = "visible";
+        signup.textContent = "Signup";
         alertMessage("You have been signed out!!")
         // render the welcome page 
         renderWelcome();
@@ -315,8 +336,11 @@ function fetchPrevRounds() {
     fetch(`http://localhost:3000/user_rounds/${username}`)
     .then(resp => resp.json())
     .then(rounds => {
-        console.log(rounds)
         clearMain()
+        if(rounds.length == 0) {
+            alertMessage("You need to create a round first!")
+            return
+        }
         rounds.forEach(round => renderRound(round))
     })
     .catch(error => console.log(error.message))
@@ -406,14 +430,36 @@ function renderAnalytics() {
     clearMain()
     let main = document.getElementById('main')
     let userAn = document.createElement('button')
+    let roundAn = document.createElement('button')
 
     userAn.textContent = "User Analytics"
-    userAn.addEventListener('click', () => renderUserAnalytics())
-    main.append(userAn)
+    roundAn.textContent = "Round Analytics"
+    userAn.addEventListener('click', () => fetchUserAnalytics())
+    roundAn.addEventListener('click', () => fetchUserRounds())
+    main.append(userAn, roundAn)
 }
 
-function renderUserAnalytics() {
+function fetchUserAnalytics() {
+    username = localStorage.user
+    console.log(`username = ${username}`)
+    fetch(`http://localhost:3000/analytics/${username}`)
+    .then(resp => resp.json())
+    .then(data => renderUserAnalytics(data))
+    .catch(() => {
+        alertMessage("You do not have any analytics to see.")
+    })
+}
+
+function renderUserAnalytics(data, rounds = null) {
     let main = document.getElementById('main')
+    let dropDown = main.querySelector('select')
+    let value = dropDown.value
+    clearMain()
+    renderAnalytics()
+    if(rounds != null) {
+        renderFirstRoundAnalytics(rounds, value)
+    }
+    let analytics = document.createElement('div')
     let anlabel1 = document.createElement('h5')
     let anlabel2 = document.createElement('h5')
     let anlabel3 = document.createElement('h5')
@@ -421,14 +467,54 @@ function renderUserAnalytics() {
     let anlabel5 = document.createElement('h5')
     let anlabel6 = document.createElement('h5')
 
+    analytics.id = 'analytics'
+    anlabel1.textContent = `Eagles: ${data.eagles} of ${data.holes} holes`
+    anlabel2.textContent = `Birdies: ${data.birdies} of ${data.holes} holes`
+    anlabel3.textContent = `Pars: ${data.pars} of ${data.holes} holes`
+    anlabel4.textContent = `Bogey's: ${data.bogey} of ${data.holes} holes`
+    anlabel5.textContent = `Double Bogey's: ${data.db} of ${data.holes} holes`
 
-    anlabel1.textContent = "Lifetime Eagles: "
-    anlabel2.textContent = "Lifetime Birdies: "
-    anlabel3.textContent = "Lifetime Pars: "
-    anlabel4.textContent = "Lifetime Bogey's: "
-    anlabel5.textContent = "Lifetime Double Bogey's: "
-    anlabel6.textContent = "Lifetime Triple Bogey's: "
-
-    main.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+    analytics.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+    main.append(analytics)
 
 }
+
+function renderFirstRoundAnalytics(rounds, value = null) {
+    let roundDD = document.createElement('select');
+    let label = document.createElement('h4')
+    let main = document.getElementById('main')
+    let button = document.createElement('button')
+    for(round of rounds){
+        let option = document.createElement('option')
+        option.value = round.id
+        option.textContent = round.name
+        roundDD.appendChild(option)
+    }
+    if(value != null) {
+        roundDD.value = value
+    }
+    roundDD.name = "dropDown"
+    button.textContent = "See Round Analytics"
+    button.addEventListener('click', (e) => fetchRoundAnalytics(e,rounds))
+    label.textContent = "Round: "
+    main.append(label, roundDD, button)
+}
+
+function fetchUserRounds() {
+    fetch(`http://localhost:3000/users/rounds/${localStorage.user}`)
+    .then(resp => resp.json())
+    //.then(rounds => console.log(rounds))
+    .then(rounds => renderFirstRoundAnalytics(rounds))
+}
+
+function fetchRoundAnalytics(e, rounds) {
+    id = e.target.parentNode.querySelector('select').value 
+    fetch(`http://localhost:3000/users/${localStorage.user}/${id}`)
+    .then(resp => resp.json())
+    .then(round => renderUserAnalytics(round, rounds))
+}
+
+// function renderSecondRoundAnalytics(round) {
+//     let main = document.getElementById('main')
+//     let 
+// }

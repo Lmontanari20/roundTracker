@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   get '/courses/:id', to: 'course#show'
   post '/new_round', to: 'rounds#new_round'
   get '/analytics/:username', to: 'users#analytics'
+  delete '/users/:username', to: 'users#destroy'
+  get '/users/rounds/:username', to: 'users#rounds'
+  get '/users/:username/:id', to: 'users#round_analytics'
 end
