@@ -430,10 +430,13 @@ function renderAnalytics() {
     clearMain()
     let main = document.getElementById('main')
     let userAn = document.createElement('button')
+    let roundAn = document.createElement('button')
 
     userAn.textContent = "User Analytics"
+    roundAn.textContent = "Round Analytics"
     userAn.addEventListener('click', () => fetchUserAnalytics())
-    main.append(userAn)
+    roundAn.addEventListener('click', () => fetchUserRounds())
+    main.append(userAn, roundAn)
 }
 
 function fetchUserAnalytics() {
@@ -447,8 +450,16 @@ function fetchUserAnalytics() {
     })
 }
 
-function renderUserAnalytics(data) {
+function renderUserAnalytics(data, rounds = null) {
     let main = document.getElementById('main')
+    let dropDown = main.querySelector('select')
+    let value = dropDown.value
+    clearMain()
+    renderAnalytics()
+    if(rounds != null) {
+        renderFirstRoundAnalytics(rounds, value)
+    }
+    let analytics = document.createElement('div')
     let anlabel1 = document.createElement('h5')
     let anlabel2 = document.createElement('h5')
     let anlabel3 = document.createElement('h5')
@@ -456,13 +467,54 @@ function renderUserAnalytics(data) {
     let anlabel5 = document.createElement('h5')
     let anlabel6 = document.createElement('h5')
 
+    analytics.id = 'analytics'
+    anlabel1.textContent = `Eagles: ${data.eagles} of ${data.holes} holes`
+    anlabel2.textContent = `Birdies: ${data.birdies} of ${data.holes} holes`
+    anlabel3.textContent = `Pars: ${data.pars} of ${data.holes} holes`
+    anlabel4.textContent = `Bogey's: ${data.bogey} of ${data.holes} holes`
+    anlabel5.textContent = `Double Bogey's: ${data.db} of ${data.holes} holes`
 
-    anlabel1.textContent = `Lifetime Eagles: ${data.eagles} of ${data.holes} holes`
-    anlabel2.textContent = `Lifetime Birdies: ${data.birdies} of ${data.holes} holes`
-    anlabel3.textContent = `Lifetime Pars: ${data.pars} of ${data.holes} holes`
-    anlabel4.textContent = `Lifetime Bogey's: ${data.bogey} of ${data.holes} holes`
-    anlabel5.textContent = `Lifetime Double Bogey's: ${data.db} of ${data.holes} holes`
-
-    main.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+    analytics.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+    main.append(analytics)
 
 }
+
+function renderFirstRoundAnalytics(rounds, value = null) {
+    let roundDD = document.createElement('select');
+    let label = document.createElement('h4')
+    let main = document.getElementById('main')
+    let button = document.createElement('button')
+    for(round of rounds){
+        let option = document.createElement('option')
+        option.value = round.id
+        option.textContent = round.name
+        roundDD.appendChild(option)
+    }
+    if(value != null) {
+        roundDD.value = value
+    }
+    roundDD.name = "dropDown"
+    button.textContent = "See Round Analytics"
+    button.addEventListener('click', (e) => fetchRoundAnalytics(e,rounds))
+    label.textContent = "Round: "
+    main.append(label, roundDD, button)
+}
+
+function fetchUserRounds() {
+    fetch(`http://localhost:3000/users/rounds/${localStorage.user}`)
+    .then(resp => resp.json())
+    //.then(rounds => console.log(rounds))
+    .then(rounds => renderFirstRoundAnalytics(rounds))
+}
+
+function fetchRoundAnalytics(e, rounds) {
+    id = e.target.parentNode.querySelector('select').value 
+    fetch(`http://localhost:3000/users/${localStorage.user}/${id}`)
+    .then(resp => resp.json())
+    .then(round => renderUserAnalytics(round, rounds))
+}
+
+// function renderSecondRoundAnalytics(round) {
+//     let main = document.getElementById('main')
+//     let 
+// }

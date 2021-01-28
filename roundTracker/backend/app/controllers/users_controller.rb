@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-
-    before_action :current, only: [:login, :analytics]
+    #before_action :current, only: [:login, :analytics]
+    
     def new
 
     end
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     end
 
     def login
-       
+        user = User.find_by(username: params[:username])
         if user 
             render json: user
         else
@@ -31,12 +31,47 @@ class UsersController < ApplicationController
     end
 
     def analytics 
-     
+        user = User.find_by(username: params[:username])
         results = user.hole_rounds.map { |x| x.result }
+        data = {
+            pars: results.count("Par"),
+            birdies: results.count("Birdie"),
+            eagles: results.count("Eagle"),
+            bogey: results.count("Bogey"),
+            db: results.count("Double Bogey"),
+            holes: user.hole_rounds.count
+        }
+        render json: data
     end
   
-    def current
-        user = User.find_by(username: params[:username])
+    def destroy 
+        user = User.find_by(username: params[:id])
+        user.destroy
     end
+
+    def rounds 
+        user = User.find_by(username: params[:username])
+        render json: user.rounds
+    end
+
+    def round_analytics 
+        user = User.find_by(username: params[:username])
+        round = user.rounds.find(params[:id])
+        hole_rounds = round.hole_rounds
+        results = hole_rounds.map { |x| x.result }
+        data = {
+            pars: results.count("Par"),
+            birdies: results.count("Birdie"),
+            eagles: results.count("Eagle"),
+            bogey: results.count("Bogey"),
+            db: results.count("Double Bogey"),
+            holes: user.hole_rounds.count
+        }
+        render json: data
+    end
+
+    # def current
+    #     user = User.find_by(username: params[:username])
+    # end
     
 end
