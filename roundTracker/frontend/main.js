@@ -118,17 +118,10 @@ function renderCreateRound(user) {
 
     clearMain();
 
-    // placeholder for course names
-    let courses = ['Pebble Beach', 'Westchester', 'Penmar', 'Rancho'];
-    // placeholder for holes
-    let holes = [
-        {par:4, distance: 400},
-        {par:3, distance: 180}
-    ]
     let courseLengths = ['9 holes', '18 holes'];
     let header = document.createElement('h2');
     header.textContent = "Create a New Golf Round";
-
+    
     let form = document.createElement('form');
     let nameLabel = document.createElement('h5');
     let nameInput = document.createElement('input');
@@ -139,37 +132,101 @@ function renderCreateRound(user) {
     let createRound = document.createElement('button');
     let br = document.createElement('br');
     let br2 = document.createElement('br');
+    
+    // placeholder for holes
+    let holes = [
+        {par:4, distance: 400},
+        {par:3, distance: 180}
+    ]
+    // placeholder for course names
+    let courses = []
+    fetch('http://localhost:3000/courses')
+    .then(resp => resp.json())
+    .then(courses => {
+        console.log(courses)
+        for(course of courses) {
+            let option = document.createElement('option');
+            option.value = course.id;
+            option.textContent = course.name;
+            courseDropDown.appendChild(option);
+        };
+    })
 
     courseDropDown.name = 'course';
     courseDropDown.id = 'course';
-
-    for(course of courses) {
-        let option = document.createElement('option');
-        option.value = course;
-        option.textContent = course;
-        courseDropDown.appendChild(option);
-    };
-
+    
+    
     for(length of courseLengths) {
         let option = document.createElement('option');
         option.value = length;
         option.textContent = length;
         lengthDropDown.appendChild(option);
     };
-
+    
+    courseDropDown.name = "coursename"
+    lengthDropDown.name = "length"
     nameLabel.textContent = "Round Name:";
     nameInput.type = "text";
+    nameInput.name = "name"
     courseLabel.textContent = "Course Name: ";
     lengthLabel.textContent = "Length of Course: ";
     createRound.textContent = "Start Round";
-    createRound.addEventListener('click', (e) => renderHole(e,holes, 1));
+    createRound.type = "submit"
+    form.addEventListener('submit', (e) => startRound(e));
 
     form.append(header, nameLabel, nameInput, lengthLabel, lengthDropDown, courseLabel, courseDropDown, br, br2, createRound);
     main.append(form);
 };
 
-function renderHole(holes, index) {
+function startRound(e) {
+    e.preventDefault()
+    let length = 0
+    if(e.target.length.value === "9 holes") {
+        length = 9
+    }else {
+        length = 18
+    }
+    let round = {
+        name: e.target.name.value,
+        length: length,
+        username: localStorage.user,
+        hole_rounds: []
+    }
+    let id= e.target.coursename.value
+    fetch(`http://localhost:3000/courses/${id}`)
+    .then(resp => resp.json())
+    .then(course => {
+        console.log(course)
+        round.course = course
+        renderHole(round, 1)
+    })
+}
+
+function renderHole(round, index) {
     clearMain()
+    if (index < 1) {
+        let alert = document.createElement("div");
+        alert.className="alert alert-danger";
+        alert.textContent = "There is no previous hole.";
+        
+        let body = document.querySelector('body');
+        body.appendChild(alert);
+        
+        setTimeout(() => {body.removeChild(alert)}, 2000);
+        renderHole(round, index+1)
+        return
+    }else if(index > round.length){
+        let alert = document.createElement("div");
+        alert.className="alert alert-danger";
+        alert.textContent = "This is the last hole!!!";
+
+        let body = document.querySelector('body');
+        body.appendChild(alert);
+
+        setTimeout(() => {body.removeChild(alert)}, 2000);
+        renderHole(round, round.length)
+        return
+    }
 
     let header = document.createElement('h2')
     let parLabel = document.createElement('h5')
@@ -182,8 +239,8 @@ function renderHole(holes, index) {
     let br = document.createElement('br')
     
     header.textContent = `Hole: ${index}`
-    parLabel.textContent = `Par: ${holes[index-1].par}`
-    distLabel.textContent = `Distance: ${holes[index-1].distance} yards`
+    parLabel.textContent = `Par: ${round.course.holes[index].par}`
+    distLabel.textContent = `Distance: ${round.course.holes[index].distance} yards`
     next.textContent = "Next Hole"
     previous.textContent = "Previous Hole"
     finish.textContent = "Finish Round"
@@ -191,19 +248,48 @@ function renderHole(holes, index) {
     scoreInput.type = "text"
     scoreInput.placeholder = "Hole Score"
 
-    next.addEventListener('click', () => renderHole(holes, index + 1))
-    previous.addEventListener('click', () => renderHole(holes, index - 1))
-    finish.addEventListener('click', () => finishRound(holes))
+    next.addEventListener('click', () => {
+        if(scoreInput.value === ""){
+            renderHole(round, index)
+            return
+        }
+        round.hole_rounds.push({score: parseInt(scoreInput.value), course_id: round.course.id, user: localStorage.user, hole_id: round.course.holes[index - 1].id})
+        renderHole(round, index + 1)
+    })
+    previous.addEventListener('click', () => {
+        if(scoreInput.value === ""){
+            renderHole(round, index)
+            return
+        }
+        round.hole_rounds.push({score: parseInt(scoreInput.value), course_id: round.course.id, user: localStorage.user, hole_id: round.course.holes[index - 1].id})
+        renderHole(round, index - 1)
+    })
+    finish.addEventListener('click', () => {
+        if(scoreInput.value === ""){
+            renderHole(round, index)
+            return
+        }
+        round.hole_rounds.push({score: parseInt(scoreInput.value), course_id: round.course.id, user: localStorage.user, hole_id: round.course.holes[index - 1].id})
+        finishRound(round)
+    })
     
     main.append(header, parLabel, distLabel, scoreLabel, scoreInput, br, previous, next, finish)
 }
 
-function finishRound(holes) {
+function finishRound(round) {
     clearMain()
-    let main = document.querySelector('main')
-    let header = document.createElement('h2')
-    header.textContent = "ROUND COMPLETED"
-    main.append(header)
+    fetch(`http://localhost:3000/new_round`,{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accepts": "application/json"
+        },
+        body: JSON.stringify(round)
+    })
+    .then(resp => resp.json())
+    .then(obj => console.log(obj))
+    //let main = document.querySelector('main')
+    
 }
 
 function clearMain() {

@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   get '/login/:username', to: 'users#login' 
   get '/login', to: 'users#error'
   get '/user_rounds/:username', to: 'rounds#index'
-  
+  get '/courses/:id', to: 'course#show'
+  post '/new_round', to: 'rounds#new_round'
 end
