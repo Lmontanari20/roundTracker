@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get '/user_rounds/:username', to: 'rounds#index'
   get '/courses/:id', to: 'course#show'
   post '/new_round', to: 'rounds#new_round'
+  get '/analytics/:username', to: 'users#analytics'
 end

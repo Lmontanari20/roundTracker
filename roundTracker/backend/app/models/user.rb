@@ -16,5 +16,9 @@ class User < ApplicationRecord
         self.hole_rounds.min_by { |x| x.result_number}
     end
 
+    def analytics
+     
+    end
+
 
 end

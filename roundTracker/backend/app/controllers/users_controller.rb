@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-
+    before_action :current, only: [:login, :analytics]
     def new
 
     end
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     end
 
     def login
-        user = User.find_by(username: params[:username])
+       
         if user 
             render json: user
         else
@@ -31,8 +31,12 @@ class UsersController < ApplicationController
     end
 
     def analytics 
-        
+     
+        results = user.hole_rounds.map { |x| x.result }
     end
   
+    def current
+        user = User.find_by(username: params[:username])
+    end
     
 end
