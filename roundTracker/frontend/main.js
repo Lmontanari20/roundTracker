@@ -88,7 +88,6 @@ function getUser(e, form) {
         fetch(`http://127.0.0.1:3000/login/${username}`)
         .then(resp => resp.json())
         .then(obj => {
-            console.log(obj);
             if (obj['message']) {
                 alertMessage(obj['message'])
             }else {
@@ -173,7 +172,6 @@ function renderCreateRound(user) {
     fetch('http://localhost:3000/courses')
     .then(resp => resp.json())
     .then(courses => {
-        console.log(courses)
         for(course of courses) {
             let option = document.createElement('option');
             option.value = course.id;
@@ -226,7 +224,6 @@ function startRound(e) {
     fetch(`http://localhost:3000/courses/${id}`)
     .then(resp => resp.json())
     .then(course => {
-        console.log(course)
         round.course = course
         renderHole(round, 1)
     })
@@ -243,7 +240,7 @@ function renderHole(round, index) {
     //     renderHole(round, round.length)
     //     return
     // }
-
+    
     let header = document.createElement('h2')
     let parLabel = document.createElement('h5')
     let distLabel = document.createElement('h5')
@@ -255,8 +252,8 @@ function renderHole(round, index) {
     let br = document.createElement('br')
     
     header.textContent = `Hole: ${index}`
-    parLabel.textContent = `Par: ${round.course.holes[index].par}`
-    distLabel.textContent = `Distance: ${round.course.holes[index].distance} yards`
+    parLabel.textContent = `Par: ${round.course.holes[index - 1].par}`
+    distLabel.textContent = `Distance: ${round.course.holes[index - 1].distance} yards`
     next.textContent = "Next Hole"
     previous.textContent = "Previous Hole"
     finish.textContent = "Finish Round"
@@ -269,9 +266,10 @@ function renderHole(round, index) {
             alertMessage("You need to add a score!!")
             renderHole(round, index)
             return
-        }else if(index + 1 > round.length){
+        }
+        if(index + 1 > round.length){
             alertMessage("This is the last hole!!")
-            renderHole(round, index)
+            renderHole(round, round.length)
             return
         }
         round.hole_rounds.push({score: parseInt(scoreInput.value), course_id: round.course.id, user: localStorage.user, hole_id: round.course.holes[index - 1].id})
@@ -347,7 +345,6 @@ function fetchPrevRounds() {
 }
 
 function renderRound(round) {
-    console.log("made it to render round")
     let holeRounds = round.hole_rounds
     let main = document.getElementById('main')
     let card = document.createElement('div')
@@ -364,6 +361,13 @@ function renderRound(round) {
     let upd = document.createElement('button')
     let br = document.createElement('br')
 
+    let par = 0
+    if(round.length == 18) {
+        par = round.course.par
+    }else {
+        par = (round.course.par/2)
+    }
+
     card.className = 'card'
     card.id = round.id
     cardBody.className = 'card-body'
@@ -373,7 +377,7 @@ function renderRound(round) {
     titleLabel.style.position = "inline"
     lengthLabel.textContent = `Round Length: ${round.length} holes`
     courseLabel.textContent = `Course Name: ${round.course.name}`
-    parLabel.textContent = `Course Par: ${round.course.par}`
+    parLabel.textContent = `Course Par: ${par}`
     scoreLabel.textContent = "Round Score:"
     scoreInput.value = calculateScore(holeRounds)
     scoreInput.name = "score"
@@ -427,6 +431,11 @@ function calculateScore(holeRounds) {
 }
 
 function renderAnalytics() {
+    user = localStorage.user
+    if(typeof user === 'undefined'){
+        renderWelcome();
+        return
+    }
     clearMain()
     let main = document.getElementById('main')
     let userAn = document.createElement('button')
@@ -441,7 +450,6 @@ function renderAnalytics() {
 
 function fetchUserAnalytics() {
     username = localStorage.user
-    console.log(`username = ${username}`)
     fetch(`http://localhost:3000/analytics/${username}`)
     .then(resp => resp.json())
     .then(data => renderUserAnalytics(data))
