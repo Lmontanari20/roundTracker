@@ -12,9 +12,15 @@ class RoundsController < ApplicationController
     end
 
     def new_round
+
         user = User.find_by(username: params[:username])
-        round = Round.create(name: params[:name], length: params[:length], course_id: params[:course_id], user_id: user.id )
-        render json: round
+        hole_rounds = params[:hole_rounds]
+        p hole_rounds
+        round = Round.create(name: params[:name], length: params[:length], user_id: user.id, course_id: params[:course][:id])
+        hole_rounds.each{|hole|
+            HoleRound.create(score: hole[:score], hole_id: hole[:hole_id], round_id: round[:id], user_id: user[:id], course_id: hole[:course_id])
+        }
+        render json: round, include: [:hole_rounds, :course]
     end
 
     def destroy
