@@ -13,13 +13,26 @@ function addEventListeners() {
     let welcome = document.getElementById('welcome');
     let newRound = document.getElementById('new-round');
     let rounds = document.getElementById('rounds');
+    let analytics = document.getElementById('analytics')
 
     login.addEventListener("click", (e) => getUser(e, form));
     signup.addEventListener("click", (e) => postUser(e, form));
     welcome.addEventListener("click", () => renderWelcome());
     newRound.addEventListener("click", () => renderCreateRound(localStorage.user))
     rounds.addEventListener("click", () => fetchPrevRounds())
+    analytics.addEventListener("click", () => renderAnalytics())
 
+}
+
+function alertMessage(message) {
+    let alert = document.createElement("div");
+    alert.className="alert alert-danger";
+    alert.textContent = message;
+        
+    let body = document.querySelector('body');
+    body.appendChild(alert);
+        
+    setTimeout(() => {body.removeChild(alert)}, 2000);
 }
 
 // post the user on signup 
@@ -55,20 +68,13 @@ function getUser(e, form) {
         .then(obj => {
             console.log(obj);
             if (obj['message']) {
-                let alert = document.createElement("div");
-                alert.className="alert alert-danger";
-                alert.textContent = obj['message'];
-
-                let body = document.querySelector('body');
-                body.appendChild(alert);
-                
-                setTimeout(() => {body.removeChild(alert)}, 2000);
-                
+                alertMessage(obj['message'])
             }else {
                 localStorage.setItem('user', obj.username);
                 login.textContent = 'Logout';
                 signup.style.visibility = "hidden";
                 document.getElementsByClassName('form-control')[0].style.visibility = "hidden";
+                alertMessage('You have signed in Succesfully!!')
                 //renderCreateRound(localStorage.user)
                 renderCreateRound(localStorage.user);
             }
@@ -80,6 +86,7 @@ function getUser(e, form) {
         form.name.style.visibility = 'visible';
         login.textContent = "Login";
         signup.style.visibility = "visible";
+        alertMessage("You have been signed out!!")
         // render the welcome page 
         renderWelcome();
     };
@@ -206,29 +213,15 @@ function startRound(e) {
 
 function renderHole(round, index) {
     clearMain()
-    if (index < 1) {
-        let alert = document.createElement("div");
-        alert.className="alert alert-danger";
-        alert.textContent = "There is no previous hole.";
-        
-        let body = document.querySelector('body');
-        body.appendChild(alert);
-        
-        setTimeout(() => {body.removeChild(alert)}, 2000);
-        renderHole(round, index+1)
-        return
-    }else if(index > round.length){
-        let alert = document.createElement("div");
-        alert.className="alert alert-danger";
-        alert.textContent = "This is the last hole!!!";
-
-        let body = document.querySelector('body');
-        body.appendChild(alert);
-
-        setTimeout(() => {body.removeChild(alert)}, 2000);
-        renderHole(round, round.length)
-        return
-    }
+    // if (index < 1) {
+    //     alertMessage('There is no previous hole...')
+    //     renderHole(round, index+1)
+    //     return
+    // }else if(index > round.length){
+    //     alertMessage("This is the last hole!!!")
+    //     renderHole(round, round.length)
+    //     return
+    // }
 
     let header = document.createElement('h2')
     let parLabel = document.createElement('h5')
@@ -252,6 +245,11 @@ function renderHole(round, index) {
 
     next.addEventListener('click', () => {
         if(scoreInput.value === ""){
+            alertMessage("You need to add a score!!")
+            renderHole(round, index)
+            return
+        }else if(index + 1 > round.length){
+            alertMessage("This is the last hole!!")
             renderHole(round, index)
             return
         }
@@ -260,7 +258,12 @@ function renderHole(round, index) {
     })
     previous.addEventListener('click', () => {
         if(scoreInput.value === ""){
+            alertMessage("You need to add a score!!")
             renderHole(round, index)
+            return
+        }else if(index - 1 < 1) {
+            alertMessage('There is no previous hole...')
+            renderHole(round,index)
             return
         }
         round.hole_rounds.push({score: parseInt(scoreInput.value), course_id: round.course.id, user: localStorage.user, hole_id: round.course.holes[index - 1].id})
@@ -268,6 +271,7 @@ function renderHole(round, index) {
     })
     finish.addEventListener('click', () => {
         if(scoreInput.value === ""){
+            alertMessage("You need to add a score!!")
             renderHole(round, index)
             return
         }
@@ -289,7 +293,7 @@ function finishRound(round) {
         body: JSON.stringify(round)
     })
     .then(resp => resp.json())
-    .then(obj => console.log(obj))
+    .then((round) => renderRound(round))
     //let main = document.querySelector('main')
     
 }
@@ -350,7 +354,7 @@ function renderRound(round) {
     scoreInput.value = calculateScore(holeRounds)
     scoreInput.name = "score"
     del.textContent = "Delete"
-    del.addEventListener('click', () => deleteRound(round.id))
+    del.addEventListener('click', (e) => deleteRound(e, round.id))
     upd.textContent = "Update"
     upd.addEventListener('click', (e) => updateRound(e, cardForm, round.id))
     cardForm.append(titleLabel, titleInput, lengthLabel, courseLabel, parLabel, scoreLabel, scoreInput, br, del, upd)
@@ -359,21 +363,15 @@ function renderRound(round) {
     main.appendChild(card)
 }
 
-function deleteRound(id) {
+function deleteRound(e, id) {
+    e.preventDefault()
     // debugger
     fetch(`http://localhost:3000/rounds/${id}`, {
         method: "DELETE"
     })
     .then(() => {
         fetchPrevRounds()
-        let alert = document.createElement("div");
-        alert.className="alert alert-danger";
-        alert.textContent = "Round deleted successfully, next time swing better.";
-
-        let body = document.querySelector('body');
-        body.appendChild(alert);
-
-        setTimeout(() => {body.removeChild(alert)}, 2000);
+        alertMessage("Round deleted succesfully, next time swing better.")
     })
 }
 
@@ -391,14 +389,8 @@ function updateRound(e, form, id) {
     .then(resp => resp.json())
     .then((obj) => {
         fetchPrevRounds()
-        let alert = document.createElement("div");
-        alert.className="alert alert-danger";
-        alert.textContent = "Round updated successfully";
-
-        let body = document.querySelector('body');
-        body.appendChild(alert);
-
-        setTimeout(() => {body.removeChild(alert)}, 2000);
+        alertMessage("Round updated succesfully!!")
+        
     })
 }
 
@@ -408,4 +400,35 @@ function calculateScore(holeRounds) {
         sum += hole.score
     })
     return sum 
+}
+
+function renderAnalytics() {
+    clearMain()
+    let main = document.getElementById('main')
+    let userAn = document.createElement('button')
+
+    userAn.textContent = "User Analytics"
+    userAn.addEventListener('click', () => renderUserAnalytics())
+    main.append(userAn)
+}
+
+function renderUserAnalytics() {
+    let main = document.getElementById('main')
+    let anlabel1 = document.createElement('h5')
+    let anlabel2 = document.createElement('h5')
+    let anlabel3 = document.createElement('h5')
+    let anlabel4 = document.createElement('h5')
+    let anlabel5 = document.createElement('h5')
+    let anlabel6 = document.createElement('h5')
+
+
+    anlabel1.textContent = "Lifetime Eagles: "
+    anlabel2.textContent = "Lifetime Birdies: "
+    anlabel3.textContent = "Lifetime Pars: "
+    anlabel4.textContent = "Lifetime Bogey's: "
+    anlabel5.textContent = "Lifetime Double Bogey's: "
+    anlabel6.textContent = "Lifetime Triple Bogey's: "
+
+    main.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+
 }
