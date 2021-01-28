@@ -1,8 +1,6 @@
 class CoursesController < ApplicationController
 
-    def analytics
-        
-    end
+ 
 
     def show 
         course = Course.find_by(id: params[:id])
