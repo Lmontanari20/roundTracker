@@ -15,7 +15,7 @@ function addEventListeners() {
     let rounds = document.getElementById('rounds');
 
     login.addEventListener("click", (e) => getUser(e, form));
-    signup.addEventListener("click", () => postUser(form));
+    signup.addEventListener("click", (e) => postUser(e, form));
     welcome.addEventListener("click", () => renderWelcome());
     newRound.addEventListener("click", () => renderCreateRound(localStorage.user))
     rounds.addEventListener("click", () => fetchPrevRounds())
@@ -23,7 +23,8 @@ function addEventListeners() {
 }
 
 // post the user on signup 
-function postUser(form) {
+function postUser(e, form) {
+    e.preventDefault()
     fetch('http://127.0.0.1:3000/users', {
         method: 'POST',
         headers: {
@@ -37,6 +38,7 @@ function postUser(form) {
         document.getElementById('login').textContent = 'Logout'
         localStorage.setItem('user', obj.username);
         document.getElementById('signup').style.visibility = "hidden"
+        document.getElementsByClassName('form-control')[0].style.visibility = "hidden"
         renderCreateRound(localStorage.user)
     })
 }
@@ -134,10 +136,10 @@ function renderCreateRound(user) {
     let br2 = document.createElement('br');
     
     // placeholder for holes
-    let holes = [
-        {par:4, distance: 400},
-        {par:3, distance: 180}
-    ]
+    // let holes = [
+    //     {par:4, distance: 400},
+    //     {par:3, distance: 180}
+    // ]
     // placeholder for course names
     let courses = []
     fetch('http://localhost:3000/courses')
