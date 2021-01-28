@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2021_01_26_203501) do
   create_table "holes", force: :cascade do |t|
     t.integer "par"
     t.integer "distance"
+    t.string "image"
     t.integer "course_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
