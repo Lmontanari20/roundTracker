@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   delete '/users/:username', to: 'users#destroy'
   get '/users/rounds/:username', to: 'users#rounds'
   get '/users/:username/:id', to: 'users#round_analytics'
+  get 'courses/analytics/:id', to: 'courses#analytics'
 end

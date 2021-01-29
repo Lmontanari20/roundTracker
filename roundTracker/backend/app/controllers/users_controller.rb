@@ -65,7 +65,7 @@ class UsersController < ApplicationController
             eagles: results.count("Eagle"),
             bogey: results.count("Bogey"),
             db: results.count("Double Bogey"),
-            holes: user.hole_rounds.count
+            holes: round.length
         }
         render json: data
     end
