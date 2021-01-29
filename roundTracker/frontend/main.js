@@ -121,6 +121,11 @@ function renderWelcome() {
     let img = document.createElement('img');
     let p = document.createElement('p');
     let br = document.createElement('br');
+    let br2 = document.createElement('br');
+    let br3 = document.createElement('br');
+    let br4 = document.createElement('br');
+
+
 
     img.src = "https://blog-assets.lightspeedhq.com/img/2020/04/6f706b67-golf-scorecard.jpg";
     img.style.width = "600px";
@@ -128,7 +133,7 @@ function renderWelcome() {
     header.textContent = "Welcome to the Round Tracker";
     lilheader.textContent = "Where your golf dreams come to life... or shatter";
     p.textContent = "This application was designed for you to check out how good your golf game really is. The first step is to signup with a username. Once you signup you will be able to create a round, as long as you follow the form and input your scores you will be able to access analytics. Once you complete your round it will take you to a page with all your previous rounds. From there you can edit or delete a round. You can also see your analytics by clicking the analytics tab. Good luck and hit it in the hole!"
-    main.append(header, lilheader, img, p);
+    main.append(br, header, lilheader, br2, img, p, br4);
 }
 
 // called when the user logs in
@@ -161,6 +166,8 @@ function renderCreateRound(user) {
     let createRound = document.createElement('button');
     let br = document.createElement('br');
     let br2 = document.createElement('br');
+    let br3 = document.createElement('br');
+
     
     // placeholder for holes
     // let holes = [
@@ -202,7 +209,7 @@ function renderCreateRound(user) {
     createRound.type = "submit"
     form.addEventListener('submit', (e) => startRound(e));
 
-    form.append(header, nameLabel, nameInput, lengthLabel, lengthDropDown, courseLabel, courseDropDown, br, br2, createRound);
+    form.append(br3, header, nameLabel, nameInput, lengthLabel, lengthDropDown, courseLabel, courseDropDown, br, br2, createRound);
     main.append(form);
 };
 
@@ -231,16 +238,8 @@ function startRound(e) {
 
 function renderHole(round, index) {
     clearMain()
-    // if (index < 1) {
-    //     alertMessage('There is no previous hole...')
-    //     renderHole(round, index+1)
-    //     return
-    // }else if(index > round.length){
-    //     alertMessage("This is the last hole!!!")
-    //     renderHole(round, round.length)
-    //     return
-    // }
     
+    console.log(round)
     let header = document.createElement('h2')
     let parLabel = document.createElement('h5')
     let distLabel = document.createElement('h5')
@@ -249,8 +248,13 @@ function renderHole(round, index) {
     let finish = document.createElement('button')
     let scoreLabel = document.createElement('h5')
     let scoreInput = document.createElement('input')
+    let img = document.createElement('img')
     let br = document.createElement('br')
-    
+    let br1 = document.createElement('br')
+    let br2 = document.createElement('br')
+
+    img.src = round.course.holes[index - 1].image
+    img.id = "renderhole"
     header.textContent = `Hole: ${index}`
     parLabel.textContent = `Par: ${round.course.holes[index - 1].par}`
     distLabel.textContent = `Distance: ${round.course.holes[index - 1].distance} yards`
@@ -298,7 +302,7 @@ function renderHole(round, index) {
         finishRound(round)
     })
     
-    main.append(header, parLabel, distLabel, scoreLabel, scoreInput, br, previous, next, finish)
+    main.append(br2, header, img, parLabel, distLabel, scoreLabel, scoreInput, br, br1, previous, next, finish)
 }
 
 function finishRound(round) {
@@ -356,10 +360,15 @@ function renderRound(round) {
     let courseLabel = document.createElement('h5')
     let parLabel = document.createElement('h5')
     let scoreLabel = document.createElement('h5')
-    let scoreInput = document.createElement('input')
+    //let scoreInput = document.createElement('input')
     let del = document.createElement('button')
     let upd = document.createElement('button')
     let br = document.createElement('br')
+    let br1 = document.createElement('br')
+    let br2 = document.createElement('br')
+    let br3 = document.createElement('br')
+    let br4 = document.createElement('br')
+
 
     let par = 0
     if(round.length == 18) {
@@ -372,23 +381,24 @@ function renderRound(round) {
     card.id = round.id
     cardBody.className = 'card-body'
     titleLabel.textContent = "Round Name:"
+    titleLabel.style.fontWeight = "bold"
     titleInput.value = round.name
     titleInput.name = "name"
     titleLabel.style.position = "inline"
-    lengthLabel.textContent = `Round Length: ${round.length} holes`
-    courseLabel.textContent = `Course Name: ${round.course.name}`
-    parLabel.textContent = `Course Par: ${par}`
-    scoreLabel.textContent = "Round Score:"
-    scoreInput.value = calculateScore(holeRounds)
-    scoreInput.name = "score"
+    lengthLabel.innerHTML = `<b>Round Length:</b> ${round.length} holes`
+    courseLabel.innerHTML = `<b>Course Name:</b> ${round.course.name}`
+    parLabel.innerHTML = `<b>Course Par:</b> ${par}`
+    scoreLabel.innerHTML = `<b>Round Score:</b> ${calculateScore(holeRounds)}`
+    //scoreInput.value = calculateScore(holeRounds)
+    //scoreInput.name = "score"
     del.textContent = "Delete"
     del.addEventListener('click', (e) => deleteRound(e, round.id))
     upd.textContent = "Update"
     upd.addEventListener('click', (e) => updateRound(e, cardForm, round.id))
-    cardForm.append(titleLabel, titleInput, lengthLabel, courseLabel, parLabel, scoreLabel, scoreInput, br, del, upd)
+    cardForm.append(titleLabel, titleInput, lengthLabel, courseLabel, parLabel, scoreLabel, br, br3, del, upd)
     cardBody.appendChild(cardForm)
-    card.appendChild(cardBody)
-    main.appendChild(card)
+    card.append(cardBody, br1)
+    main.append(br2, card, br4)
 }
 
 function deleteRound(e, id) {
@@ -438,14 +448,84 @@ function renderAnalytics() {
     }
     clearMain()
     let main = document.getElementById('main')
+    let header = document.createElement('h2')
     let userAn = document.createElement('button')
     let roundAn = document.createElement('button')
+    let courseAn = document.createElement('button')
+    let br = document.createElement('br')
+    let br2 = document.createElement('br')
 
+    header.textContent = "Analytics"
     userAn.textContent = "User Analytics"
     roundAn.textContent = "Round Analytics"
+    courseAn.textContent = "Course Analytics"
     userAn.addEventListener('click', () => fetchUserAnalytics())
     roundAn.addEventListener('click', () => fetchUserRounds())
-    main.append(userAn, roundAn)
+    courseAn.addEventListener('click', () => fetchCourses())
+    main.append(br, header, br2, courseAn, userAn, roundAn)
+}
+
+function fetchCourses() {
+    clearMain()
+    renderAnalytics()
+    fetch(`http://localhost:3000/courses`)
+    .then(resp => resp.json())
+    .then(courses => courseAnalytics(courses))
+}
+
+function courseAnalytics(courses, value = null) {
+    let courseDD = document.createElement('select');
+    let label = document.createElement('h4')
+    let main = document.getElementById('main')
+    let button = document.createElement('button')
+    for(course of courses){
+        let option = document.createElement('option')
+        option.value = course.id
+        option.textContent = course.name
+        courseDD.appendChild(option)
+    }
+    if(value != null) {
+        courseDD.value = value
+    }
+    courseDD.name = "dropDown"
+    button.textContent = "See Course Analytics"
+    button.addEventListener('click', (e) => fetchCourseAnalytics(e, courses))
+    label.textContent = "Course: "
+    main.append(label, courseDD, button)
+}
+
+function fetchCourseAnalytics(e, courses) {
+    id = e.target.parentNode.querySelector('select').value 
+    clearMain()
+    renderAnalytics()
+    courseAnalytics(courses, id)
+    fetch(`http://localhost:3000/courses/analytics/${id}`)
+    .then(resp => resp.json())
+    .then(data => renderAllCourseAnalytics(data))
+}
+
+function renderAllCourseAnalytics(data) {
+    let main = document.getElementById('main')
+    let courseLabel = document.createElement('h2')
+    let analytics = document.createElement('div')
+    let anlabel1 = document.createElement('h5')
+    let anlabel2 = document.createElement('h5')
+    let anlabel3 = document.createElement('h5')
+    let anlabel4 = document.createElement('h5')
+    let anlabel5 = document.createElement('h5')
+    let anlabel6 = document.createElement('h5')
+    let br = document.createElement('br');
+
+    analytics.id = 'analytics'
+    anlabel1.textContent = `Eagles: ${data.eagles} of ${data.holes} holes`
+    anlabel2.textContent = `Birdies: ${data.birdies} of ${data.holes} holes`
+    anlabel3.textContent = `Pars: ${data.pars} of ${data.holes} holes`
+    anlabel4.textContent = `Bogey's: ${data.bogey} of ${data.holes} holes`
+    anlabel5.textContent = `Double Bogey's: ${data.db} of ${data.holes} holes`
+    courseLabel.textContent = `Course: ${data.name}`
+
+    analytics.append(courseLabel, br, anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
+    main.append(analytics)
 }
 
 function fetchUserAnalytics() {
@@ -457,6 +537,7 @@ function fetchUserAnalytics() {
         alertMessage("You do not have any analytics to see.")
     })
 }
+
 
 function renderUserAnalytics(data, rounds = null) {
     let main = document.getElementById('main')
@@ -474,6 +555,7 @@ function renderUserAnalytics(data, rounds = null) {
     let anlabel4 = document.createElement('h5')
     let anlabel5 = document.createElement('h5')
     let anlabel6 = document.createElement('h5')
+    let br = document.createElement('br');
 
     analytics.id = 'analytics'
     anlabel1.textContent = `Eagles: ${data.eagles} of ${data.holes} holes`
@@ -482,8 +564,8 @@ function renderUserAnalytics(data, rounds = null) {
     anlabel4.textContent = `Bogey's: ${data.bogey} of ${data.holes} holes`
     anlabel5.textContent = `Double Bogey's: ${data.db} of ${data.holes} holes`
 
-    analytics.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6)
-    main.append(analytics)
+    analytics.append(anlabel1, anlabel2, anlabel3, anlabel4, anlabel5, anlabel6, br)
+    main.append(analytics, br)
 
 }
 
@@ -509,10 +591,18 @@ function renderFirstRoundAnalytics(rounds, value = null) {
 }
 
 function fetchUserRounds() {
+    let main = document.getElementById('main')
+    let dropDown = main.querySelector('select')
+    let value = null
+    if(dropDown) {
+        value = dropDown.value
+    }
+    clearMain()
+    renderAnalytics()
     fetch(`http://localhost:3000/users/rounds/${localStorage.user}`)
     .then(resp => resp.json())
     //.then(rounds => console.log(rounds))
-    .then(rounds => renderFirstRoundAnalytics(rounds))
+    .then(rounds => renderFirstRoundAnalytics(rounds, value))
 }
 
 function fetchRoundAnalytics(e, rounds) {

@@ -12,7 +12,8 @@ img {
 
 #main {
     margin: auto;
-    border-radius: 25px;
+    margin-top: 40px;
+    border-radius: 50px;
     width: 50%;
     text-align: center;
     background-color: aliceblue;
@@ -23,9 +24,25 @@ img {
     border-style: solid;
     border-color: rgb(158, 50, 8);
     border-radius: 25px;
+    margin-bottom: 20px;
 }
 
 button {
     border-radius: 25px;
     border-color: rgb(158, 50, 8);
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+input {
+    margin-right: 10px;
+}
+
+p {
+    margin-top: 20px;
+}
+
+#renderhole {
+    width: 276px;
+    height: 474px;
 }
