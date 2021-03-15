@@ -20,7 +20,7 @@ Analytics will allow the user to see information about them as an individual i.e
 Rails, JavaScript, CSS, HTML and Bootstrap
 
 ## DEMO
-- Youtube demo - https://youtu.be/8YhqiCiHPTY
+- Youtube demo - https://youtu.be/1RGPzzYay9A
 
 ## CONTACT 
 Lucas Montanari - lmonty2011@gmail.com
