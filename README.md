@@ -22,6 +22,6 @@ Rails, JavaScript, CSS, HTML and Bootstrap
 ## DEMO
 - Youtube demo - https://youtu.be/8YhqiCiHPTY
 
-## Contact 
+## CONTACT 
 Lucas Montanari - lmonty2011@gmail.com
 Charlie Knight - williamchknight@gmail.com
